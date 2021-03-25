@@ -18,6 +18,10 @@
 <p><code>hugo new site mycoolsite</code></p>
 </li>
 <li>
+<p>New post</p>
+<p><code>hugo new posts/post-name.md</code></p>
+</li>
+<li>
 <p>Building the code</p>
 <p><code>hugo server -t your-cool-theme-name</code></p>
 </li>
@@ -42,14 +46,64 @@ git add .
 git commit -m <span style="color:#d14">&#34;msg&#34;</span>
 git push origin main
 </code></pre></div><p>Notice that my theme is called <code>hugo-notepadium</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">MyMain</span> <span style="color:#000;font-weight:bold">{</span>
+<p>I have created a deployment script:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#999;font-weight:bold;font-style:italic">#!/bin/sh
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#998;font-style:italic"># if fail, deploy stops</span>
+<span style="color:#0086b3">set</span> -e
 
-	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-		Demo demo <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Demo<span style="color:#000;font-weight:bold">();</span>
-		demo<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setHeader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;yaba-daba-duu&#34;</span><span style="color:#000;font-weight:bold">);</span>
-	<span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div></article><section class="article labels"><a class="category" href=/categories/start/>start</a><a class="tag" href=/tags/start/>start</a></section>
+<span style="color:#0086b3">printf</span> <span style="color:#d14">&#34;\033[0;32mDeploying new stuff to github...\033[0m\n&#34;</span>
+
+<span style="color:#998;font-style:italic"># build project</span>
+hugo -t hugo-notepadium
+
+<span style="color:#998;font-style:italic"># go to /public</span>
+<span style="color:#0086b3">cd</span> public
+
+<span style="color:#998;font-style:italic"># add everything to git</span>
+git add .
+
+<span style="color:#998;font-style:italic"># commit</span>
+<span style="color:#008080">msg</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;rebuilding site </span><span style="color:#000;font-weight:bold">$(</span>date<span style="color:#000;font-weight:bold">)</span><span style="color:#d14">&#34;</span>
+<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[</span> -n <span style="color:#d14">&#34;</span><span style="color:#008080">$*</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">then</span>
+	<span style="color:#008080">msg</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;</span><span style="color:#008080">$*</span><span style="color:#d14">&#34;</span>
+<span style="color:#000;font-weight:bold">fi</span>
+
+git commit -m <span style="color:#d14">&#34;</span><span style="color:#008080">$msg</span><span style="color:#d14">&#34;</span>
+
+<span style="color:#998;font-style:italic"># push and build</span>
+git push origin main
+</code></pre></div><h3 id="to-add-tags-and-categories">To add tags and categories</h3>
+<p>Simply just add</p>
+<ul>
+<li><code>tags: [&quot;your-tag-name&quot;]</code></li>
+<li><code>categories: [&quot;your-category-name&quot;]</code></li>
+</ul>
+<p>into header block.</p>
+<p>And in your config.toml/.yml file make sure you have enabled both of these features (in my case):</p>
+<pre><code>[params.nav]
+showCategories = true
+showTags = true	
+</code></pre><h3 id="useful-links-and-sources">Useful links and sources</h3>
+<ol>
+<li>
+<p><a href="https://gohugo.io/getting-started/configuration/"target="_blank" rel="noopener noreferrer">Hugo config</a>
+</p>
+</li>
+<li>
+<p><a href="https://themes.gohugo.io/hugo-notepadium/"target="_blank" rel="noopener noreferrer">Notepadium theme</a>
+</p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=LIFvgrRxdt4"target="_blank" rel="noopener noreferrer">Getting started with hugo and github pages</a>
+</p>
+</li>
+<li>
+<p><a href="https://raw.githubusercontent.com/cntrump/hugo-notepadium/master/exampleSite/content/post/markdown-syntax.md"target="_blank" rel="noopener noreferrer">Raw notepadium syntax highlights</a>
+</p>
+</li>
+</ol>
+</article>
 </div>
 <div class="article bottom"></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">The simple engineer blog</p>

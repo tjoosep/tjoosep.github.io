@@ -38,6 +38,10 @@
 &lt;p&gt;&lt;code&gt;hugo new site mycoolsite&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
+&lt;p&gt;New post&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hugo new posts/post-name.md&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;Building the code&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;hugo server -t your-cool-theme-name&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
@@ -62,14 +66,64 @@ git add .
 git commit -m &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;msg&amp;#34;&lt;/span&gt;
 git push origin main
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Notice that my theme is called &lt;code&gt;hugo-notepadium&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;MyMain&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;p&gt;I have created a deployment script:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#!/bin/sh
+&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# if fail, deploy stops&lt;/span&gt;
+&lt;span style=&#34;color:#0086b3&#34;&gt;set&lt;/span&gt; -e
 
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		Demo demo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Demo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-		demo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;setHeader&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;yaba-daba-duu&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span style=&#34;color:#0086b3&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;\033[0;32mDeploying new stuff to github...\033[0m\n&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# build project&lt;/span&gt;
+hugo -t hugo-notepadium
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# go to /public&lt;/span&gt;
+&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; public
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# add everything to git&lt;/span&gt;
+git add .
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# commit&lt;/span&gt;
+&lt;span style=&#34;color:#008080&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;rebuilding site &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;$(&lt;/span&gt;date&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt; -n &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;$*&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;then&lt;/span&gt;
+	&lt;span style=&#34;color:#008080&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;$*&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+
+git commit -m &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;$msg&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# push and build&lt;/span&gt;
+git push origin main
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;to-add-tags-and-categories&#34;&gt;To add tags and categories&lt;/h3&gt;
+&lt;p&gt;Simply just add&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;tags: [&amp;quot;your-tag-name&amp;quot;]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;categories: [&amp;quot;your-category-name&amp;quot;]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;into header block.&lt;/p&gt;
+&lt;p&gt;And in your config.toml/.yml file make sure you have enabled both of these features (in my case):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[params.nav]
+showCategories = true
+showTags = true	
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;useful-links-and-sources&#34;&gt;Useful links and sources&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://gohugo.io/getting-started/configuration/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Hugo config&lt;/a&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://themes.gohugo.io/hugo-notepadium/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Notepadium theme&lt;/a&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=LIFvgrRxdt4&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Getting started with hugo and github pages&lt;/a&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://raw.githubusercontent.com/cntrump/hugo-notepadium/master/exampleSite/content/post/markdown-syntax.md&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Raw notepadium syntax highlights&lt;/a&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</description>
     </item>
     
   </channel>
