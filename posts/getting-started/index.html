@@ -4,8 +4,44 @@
 <meta name="supported-color-schemes" content="light dark"><title>Getting Started&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Getting Started" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/about">About</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Getting Started</h1><p class="article date">2021-03-21</p></section><article class="article markdown-body"><p>Getting started with the blog</p>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Getting Started</h1><p class="article date">2021-03-21</p></section><article class="article markdown-body"><p>For my site I use <a href="https://gohugo.io/"target="_blank" rel="noopener noreferrer">Hugo</a>
+. It is very simple and easy to set up the site, there are A LOT of themes and everything is easily configurable.</p>
+<h3 id="some-helpful-commands">Some helpful commands</h3>
+<ol>
+<li>
+<p>Install hugo</p>
+<p><code>brew install hugo</code></p>
+</li>
+<li>
+<p>New site</p>
+<p><code>hugo new site mycoolsite</code></p>
+</li>
+<li>
+<p>Building the code</p>
+<p><code>hugo server -t your-cool-theme-name</code></p>
+</li>
+<li>
+<p>View the masterpiece</p>
+<p><code>hugo server</code></p>
+</li>
+</ol>
+<h4 id="to-organize-everything-i-use-2-separate-gihtub-sites">To organize everything, I use 2 separate gihtub sites.</h4>
+<ul>
+<li>blog - hugo files and folders</li>
+<li>my-git-account.github.io - published everything from blog repository.</li>
+</ul>
+<p>For that I have submoduled my blog with github pages.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#0086b3">cd</span> blog
+git submodule add -b main my-git-repo.github.io.git public
+</code></pre></div><p>This command adds submodule to main branch under public folder. Everything in that folder will be published to your github pages.</p>
+<p>If everything looks good, you need to generate static files into public folder.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hugo -t hugo-notepadium
+<span style="color:#0086b3">cd</span> public
+git add .
+git commit -m <span style="color:#d14">&#34;msg&#34;</span>
+git push origin main
+</code></pre></div><p>Notice that my theme is called <code>hugo-notepadium</code></p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">MyMain</span> <span style="color:#000;font-weight:bold">{</span>
 
 	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
@@ -13,7 +49,7 @@
 		demo<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">setHeader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;yaba-daba-duu&#34;</span><span style="color:#000;font-weight:bold">);</span>
 	<span style="color:#000;font-weight:bold">}</span>
 <span style="color:#000;font-weight:bold">}</span>
-</code></pre></div></article>
+</code></pre></div></article><section class="article labels"><a class="category" href=/categories/start/>start</a><a class="tag" href=/tags/start/>start</a></section>
 </div>
 <div class="article bottom"></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">The simple engineer blog</p>
