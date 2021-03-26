@@ -5,10 +5,27 @@
     <description>Recent content in Categories on The simple engineer blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Mar 2021 14:47:23 +0200</lastBuildDate>
     
         <atom:link href="https://tjoosep.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>What&#39;s This</title>
+      <link>https://tjoosep.github.io/posts/whats-this/</link>
+      <pubDate>Thu, 25 Mar 2021 21:51:48 +0200</pubDate>
+      
+      <guid>https://tjoosep.github.io/posts/whats-this/</guid>
+      <description>&lt;p&gt;When another blog is created, there are always questions like &amp;lsquo;why create another one, everybody is sharing nowadys?&amp;rsquo;&lt;/p&gt;
+&lt;p&gt;Here are my two cents.&lt;/p&gt;
+&lt;p&gt;Usually it goes like this - I make notes into my booklet or right on the paper. Then, when time passes I can&amp;rsquo;t find any of those pages aaand I need to read those subjects all over again.&lt;/p&gt;
+&lt;p&gt;With blog it is much easier - I can write everything down, most of the things are in one place and nicely categorized (thanks Hugo!).
+I just click on tag and similar topics will pop up. Or similar categories.&lt;/p&gt;
+&lt;h4 id=&#34;what-i-write-about&#34;&gt;What I write about?&lt;/h4&gt;
+&lt;p&gt;Things I am (re)learning again. Mostly CS related.&lt;/p&gt;
+&lt;p&gt;If you somehow happened to read my posts and want to comment / give feedback / correct me on something, feel free to contact via &lt;a href=&#34;mailto:tanel_joosep@hotmail.com&#34;&gt;email&lt;/a&gt;
+&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>About me</title>
@@ -16,7 +33,8 @@
       <pubDate>Sun, 21 Mar 2021 14:47:23 +0200</pubDate>
       
       <guid>https://tjoosep.github.io/about/</guid>
-      <description></description>
+      <description>&lt;h3 id=&#34;coming-soon&#34;&gt;Coming soon!&lt;/h3&gt;
+</description>
     </item>
     
     <item>
