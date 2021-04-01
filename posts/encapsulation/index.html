@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Encapsulation&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Encapsulation" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Encapsulation</h1><p class="article date">2021-04-01</p></section><article class="article markdown-body"><p>In OOP languages, encapsulation refers to one of two notions, and sometimes to the combination thereof:</p>
+<ol>
+<li>mechanism for restricting direct access to some of the object&rsquo;s (class) components.</li>
+<li>a construct that facilitates the bundling of data with the methods operating on that data.</li>
+</ol>
+<p>Publicly accessible methods are generally provided in the class to access or modify the state more abstractly. In practice, sometimes methods (called getters and setters) are provided to access the values indirectly.</p>
+<p>Encapsulation can be achieved by declaring all the variables in the class as private and writing public mehtods in the class to set and get the values of variables.</p>
+<h3 id="access-modifiers">Access modifiers</h3>
+<p>When talking about encapsulation and data-hind in general, there is no way to get past access modifiers.
+In Java, there are 3 acceess modifiers:</p>
+<ul>
+<li><code>private</code></li>
+</ul>
+<p>This is most restrictive and probably most commonly used modifier.
+If used on method or on variable, it can be only access within the same class. Subclasses or any other class within the same or different packages cant' access.</p>
+<ul>
+<li><code>protected</code></li>
+</ul>
+<p>Attributes and methods with protected keyword can be access within subclass, by all classes within the same package, and by all subclasses within the same package or another packages.</p>
+<ul>
+<li><code>public</code></li>
+</ul>
+<p>Least restrictive modifier. Basically methods and variables are accessible from anywhere</p>
+<ul>
+<li><code>no modifier</code></li>
+</ul>
+<p>When no modifier provided, you can access its methods and variables within class and from all classes within the same package.</p>
+<h3 id="advantages">Advantages</h3>
+<ul>
+<li>Provides control over the data. E.g you want Integer variable to be greater than x. Well, you can write that logic inside the setter method.</li>
+<li>Data hiding - other classes will not be able to access the data through the private data members.</li>
+<li>Easy to test.</li>
+<li>Reusable code</li>
+</ul>
+<h3 id="information-hiding">Information hiding</h3>
+<p>Encapsulation can be used to hide data members and member functions. The internal representation of an object is generally hidden from outside of the object&rsquo;s definition. Typically, only the object&rsquo;s own methods can directly inspect or manipulate its fields.</p>
+<p>Hiding the internals of the object protects its integrity by preventing users from setting the internal data of the component into an invalid or inconsistent state. A supposed benefit of encapsulation is that it can reduce system complexity by allowing the developer to limit the interdecpendencies between software components.</p>
+<h3 id="example">Example</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Person</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#998;font-style:italic">/* Everything is private */</span>
+	<span style="color:#000;font-weight:bold">private</span> String givenName<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String surname<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Integer age<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#998;font-style:italic">// default constructor
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Person</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Encapsulation</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		Person person <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Person<span style="color:#000;font-weight:bold">();</span>
+		person<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">givenName</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;John&#34;</span><span style="color:#000;font-weight:bold">;</span>
+
+		<span style="color:#998;font-style:italic">// We will get an error, saying that givenName has private access in main.Person
+</span><span style="color:#998;font-style:italic"></span>	    System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>person<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">givenName</span><span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#998;font-style:italic">// if we change the class Person a little bit
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Person</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#998;font-style:italic">/* given and surnames are public, age is private */</span>
+	<span style="color:#000;font-weight:bold">public</span> String givenName<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">public</span> String surname<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Integer age<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Person</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Encapsulation</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		Person person <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Person<span style="color:#000;font-weight:bold">();</span>
+		person<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">givenName</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;John&#34;</span><span style="color:#000;font-weight:bold">;</span>
+		person surname <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;Doe&#34;</span><span style="color:#000;font-weight:bold">;</span>
+
+		<span style="color:#998;font-style:italic">// now if we print out
+</span><span style="color:#998;font-style:italic"></span>	    System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>person<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">givenName</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34; &#34;</span> <span style="color:#000;font-weight:bold">+</span> person<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">surname</span><span style="color:#000;font-weight:bold">);</span>
+
+	    <span style="color:#998;font-style:italic">// a wild &#34;John Doe&#34; will appear in the console
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">}</span>	
+</code></pre></div><p>Better example where &lsquo;power of encapsulation&rsquo; is shown</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Person</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">private</span> String givenName<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String surname<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Integer age<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Person</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">getFullName</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">givenName</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34; &#34;</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">surname</span><span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setAge</span><span style="color:#000;font-weight:bold">(</span>Integer newAge<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>newAge <span style="color:#000;font-weight:bold">&lt;</span> 18<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> IllegalArgumentException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Too young&#34;</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">age</span> <span style="color:#000;font-weight:bold">=</span> newAge<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>The above example has nothing wrong, but there are some risks.</p>
+<p>Imagine a wild error occurs. You will have high risk that your object is in inconsistent state which will cause
+huge headace and will take a lot of time to find the bug.</p>
+<p>It is considered good practice to keep all objects immutable. But thats quite hard to manage.</p>
+<p>Consider the <!-- raw HTML omitted -->example below<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted --></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Stack</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> size<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String<span style="color:#000;font-weight:bold">[]</span> elements<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">push</span><span style="color:#000;font-weight:bold">(</span>String element<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		size<span style="color:#000;font-weight:bold">++;</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>size <span style="color:#000;font-weight:bold">&gt;</span> elements<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;stack overflow&#34;</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		elements<span style="color:#000;font-weight:bold">[</span>size<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> element<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>The problem with above example is that Stack will be left in broken state if it throws exception.</p>
+<p>Its <code>size</code> property will be incremented, while <code>elements</code> won&rsquo;t get a new element.
+Immutability prevents this
+problem. An object will never be left in broken state, cuz its state is modified only in its constructor. The constructor will either fail or succeed.</p>
+<p>So the key takeaway for me is that: try to keep as much as possible immutable.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>This cool example is from <a href="https://www.yegor256.com/2014/06/09/objects-should-be-immutable.html"target="_blank" rel="noopener noreferrer">here</a>
+ <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</article><section class="article labels"><a class="tag" href=/tags/oop/>oop</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/inheritance/"><span class="iconfont icon-article"></span>Inheritance</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>
