@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Polymorphism&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Polymorphism" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Polymorphism</h1><p class="article date">2021-04-01</p></section><article class="article markdown-body"><p>The word &ldquo;Polymorphism&rdquo; comes from two words - &ldquo;poly&rdquo; which means many and &ldquo;morphs&rdquo; which means forms.
+Polymorphism =&gt; Many forms. It means it will allow us to perform a single acion in different ways.
+Think about it for a sec after the post. It all adds up.</p>
+<p>In Java, all objects are polymorphic as they are all derived from the <code>Object</code> class and thus it fulfills IS-A relatsionship
+with the Object class.</p>
+<h3 id="example">Example</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Addition</span> <span style="color:#000;font-weight:bold">{</span>
+	
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">addition</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> a<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> b<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>a <span style="color:#000;font-weight:bold">+</span> b<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">addition</span><span style="color:#000;font-weight:bold">(</span>String x<span style="color:#000;font-weight:bold">,</span> String y<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>x <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34;&#34;</span> <span style="color:#000;font-weight:bold">+</span> y<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> Polymorphism <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		Addition add <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Addition<span style="color:#000;font-weight:bold">();</span>
+		add<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">addition</span><span style="color:#000;font-weight:bold">(</span>2<span style="color:#000;font-weight:bold">,</span> 3<span style="color:#000;font-weight:bold">);</span>
+		add<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">addition</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;one&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;two&#34;</span><span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+</code></pre></div><p>Output:</p>
+<pre><code>5
+OneTwo
+</code></pre><p>As seen from the example above, we called same method but with different arguments.</p>
+<p><code>Same method -&gt; Different arguments =&gt; One method with many forms.</code></p>
+<p>BTW, System.out.println is also &lsquo;polymorphic&rsquo; method.</p>
+<h3 id="types-of-polymorphism">Types of polymorphism</h3>
+<h4 id="compile-time">Compile-time</h4>
+<p>As name suggest it happens in compile time.</p>
+<p>Whenever compiler tries to compile, it checks any errors etc.
+And software will not run when there are some, for example, some overloading problems.</p>
+<h5 id="example-1">Example</h5>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Calculator</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> Integer <span style="color:#900;font-weight:bold">add</span><span style="color:#000;font-weight:bold">(</span>Integer a<span style="color:#000;font-weight:bold">,</span> Integer b<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> a <span style="color:#000;font-weight:bold">+</span> b<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> Integer <span style="color:#900;font-weight:bold">add</span><span style="color:#000;font-weight:bold">(</span>Integer x<span style="color:#000;font-weight:bold">,</span> Integer y<span style="color:#000;font-weight:bold">,</span> Integer z<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> x <span style="color:#000;font-weight:bold">+</span> y <span style="color:#000;font-weight:bold">+</span> z<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">CompileTime</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		Calculator calc <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Calculator<span style="color:#000;font-weight:bold">();</span>
+		System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>calc<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">add</span><span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">,</span>2<span style="color:#000;font-weight:bold">,</span>3<span style="color:#000;font-weight:bold">));</span>
+		System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>calc<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">add</span><span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">,</span>2<span style="color:#000;font-weight:bold">));</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+</code></pre></div><h4 id="run-time">Run-time</h4>
+<p>As name here suggest - it happens in run time.</p>
+<p>What is run-time? Run-time describes software that is executed while your program is running, especially those instructions that you did not write explicitly, but are necessary for the proper execution of your code.</p>
+<p>Usually achieved with method overriding in Java.</p>
+<h5 id="example-2">Example</h5>
+<p>Below example demonstrates things that we already know - inheritance, method overriding etc.</p>
+<p>Why run-time? Because magic happens when <code>animal.makeSound()</code> is being called.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">RunTime</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		Animal animal <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Dog<span style="color:#000;font-weight:bold">();</span>
+		animal<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">makeSound</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Animal</span> <span style="color:#000;font-weight:bold">{</span>
+
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">makeSound</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Animal made sound&#34;</span><span style="color:#000;font-weight:bold">);</span>
+    <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Dog</span> <span style="color:#000;font-weight:bold">extends</span> Animal <span style="color:#000;font-weight:bold">{</span>
+
+    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">makeSound</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Dog barked&#34;</span><span style="color:#000;font-weight:bold">);</span>
+    <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h4 id="better-example">Better example</h4>
+<p>Imagine you must build theme park software. One task it to check if customer is allowed to go to the attraction. Let&rsquo;s say he or she must be at least 12 years old.</p>
+<p>Usually kids have school student card or identification card with them.</p>
+<p>So at first it might look something like this</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">IdentificationCard</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">private</span> String personalCode<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">IdentificationCard</span><span style="color:#000;font-weight:bold">(</span>String personalCode<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">personalCode</span> <span style="color:#000;font-weight:bold">=</span> personalCode<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isAtleast12YearsOld</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#458;font-weight:bold">int</span> currentYear <span style="color:#000;font-weight:bold">=</span> LocalDate<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">now</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">getYear</span><span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">return</span> getBirthDateFromIDCard<span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">&lt;=</span> currentYear <span style="color:#000;font-weight:bold">-</span> 12<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getBirthDateFromIDCard</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// read document dates and return year
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">StudentCard</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> birthYear<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">StudentCard</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> birthYear<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">birthYear</span> <span style="color:#000;font-weight:bold">=</span> birthYear<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isAtleast12YearsOld</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> birthYear <span style="color:#000;font-weight:bold">+</span> 12 <span style="color:#000;font-weight:bold">&lt;=</span> LocalDate<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">now</span><span style="color:#000;font-weight:bold">().</span><span style="color:#008080">getYear</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Rollercoaster</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">goodEnoughtToEnterAttraction</span><span style="color:#000;font-weight:bold">(</span>IdentificationCard<span style="color:#000;font-weight:bold">[]</span> idCards<span style="color:#000;font-weight:bold">,</span> StudentCard<span style="color:#000;font-weight:bold">[]</span> studentCards<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>IdentificationCard idCard <span style="color:#000;font-weight:bold">:</span> idCards<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(!</span>idCard<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">isAtleast12YearsOld</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>StudentCard studentCard <span style="color:#000;font-weight:bold">:</span> studentCards<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(!</span>studentCard<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">isAtleast12YearsOld</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>So far so good, right?</p>
+<p>Well&hellip;</p>
+<p>Add another identification card and you are in trouble. There are tons of different documents that can identify your age, e.g driving license.</p>
+<p>How to fix it?</p>
+<p>First, we can see that each document has own implementation of how to check if customer is at least 12 years old.</p>
+<p><code>goodEnoughtToEnterAttraction()</code> does not care how each customer age is calculated, nor cased what kind of document it is dealing with.</p>
+<p>So here comes the Interface - it describes set of methods. Emphasis on the word <em>describes</em>.</p>
+<p>What it means? Let&rsquo;s see</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Document</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isAtleast12YearsOld</span><span style="color:#000;font-weight:bold">();</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">IdentificationCard</span> <span style="color:#000;font-weight:bold">implements</span> Document <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#998;font-style:italic">// same as before
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">StudentCard</span> <span style="color:#000;font-weight:bold">implements</span> Document <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#998;font-style:italic">// same as before
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Now in the <code>Rollercoaster</code> class, we are able to check age like this</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Rollercoaster</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">goodEnoughtToEnterAttraction</span><span style="color:#000;font-weight:bold">(</span>Document<span style="color:#000;font-weight:bold">[]</span> documents<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>Document document <span style="color:#000;font-weight:bold">:</span> documents<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(!</span>document<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">isAtleast12YearsOld</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>See the difference? It is quite nice, since each identification document has its own way to calculate required age and each document has contraction <code>Document</code> that keeps them together.
+Meanwhile each class that implements <code>Document</code> has like two types - classe&rsquo;s own type and interface type.</p>
+</article><section class="article labels"><a class="tag" href=/tags/oop/>oop</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/abstraction/"><span class="iconfont icon-article"></span>Abstraction</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>
