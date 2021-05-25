@@ -11,6 +11,478 @@
     
     
     <item>
+      <title>Dynamic Array</title>
+      <link>https://tjoosep.github.io/ds/dynamic-array/</link>
+      <pubDate>Mon, 24 May 2021 15:47:21 +0300</pubDate>
+      
+      <guid>https://tjoosep.github.io/ds/dynamic-array/</guid>
+      <description>&lt;p&gt;Probably the most fundamental data structure.&lt;/p&gt;
+&lt;h4 id=&#34;what-is-an-array&#34;&gt;What is an Array?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;a static array is an fixed length container containing &lt;em&gt;n&lt;/em&gt; elements indexable from range [0, n-1].&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;what-is-_indexable_&#34;&gt;What is &lt;em&gt;indexable&lt;/em&gt;?&lt;/h5&gt;
+&lt;p&gt;It means that each slot in the array can be referenced with a number.&lt;/p&gt;
+&lt;h4 id=&#34;when-and-where-is-array-used&#34;&gt;When and where is Array used?&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;sotring and accessing sequential data&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;temporarily storing objects&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;used by I/O routines as buffers&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;lookup tables and invers lookup tables&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;can be used to return multiple values from a function&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;used in dynamic programming to cahce answers to subproblems&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;complexity&#34;&gt;Complexity&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;method&lt;/th&gt;
+&lt;th&gt;static array&lt;/th&gt;
+&lt;th&gt;dynamic array&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;access&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;search&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;insert&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;append&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;delete&lt;/td&gt;
+&lt;td&gt;N/A&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Access in static and in dynamic array are both constant. That is because both of them are indexable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Search is linear time. Potentially, we have to traverse all the elements in array. For exaple if element is not in the list.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Insert, append and deletion are not available for staty arrays, because static arrays are fixed size. So it does not make any sense.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Insertion for dynamic array, however, is linear, because you potentially have to shift every element to the right side, copy everything to new static array, add new element and put everything back.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Append is constant. We know the size of static inner array and thus just add new element to new &lt;em&gt;indexable&lt;/em&gt; position.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Deleteion is linear, because you have to to shift every element like in insertion and copy every element into static array.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Below is and example of array with its elements {12, 44, -5, 22} and arrows are showing its indexes.
+&lt;img  src=&#34;https://tjoosep.github.io/array.png&#34;
+        alt=&#34;array&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;Array indexing is zero-based, meaning the first element is found in position zero.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;array[0] = 12
+array[1] = 44
+array[2] = -5 
+array[3] = 22
+array[4] = error, Index out of bounds. 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If we want to add new element to already taken position, the previous element will be overwritten.
+For example, lets say we want to add element 18 to the third position (index=2). The array will become:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;array[2] := 18
+
+array[0] = 12
+array[1] = 44
+array[2] = 18 =&amp;gt; -5 is overwritten. 
+array[3] = 22
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;operations&#34;&gt;Operations&lt;/h4&gt;
+&lt;p&gt;Dyanamic array can grow and shrink in size.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Starting array: A = [34, 4]
+A.add(-2) =&amp;gt; A = [34, 4, -2]
+A.add(34) =&amp;gt; A = [34, 4, -2, 34]
+A.remove(4) =&amp;gt; &amp;gt; A = [34, -2, 34]
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;how-to-implement-dynamic-array&#34;&gt;How to implement dynamic array?&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;cretea a static array with an inital capacity&lt;/li&gt;
+&lt;li&gt;add elements to the underlying static array, keeping track of the number of the elements.&lt;/li&gt;
+&lt;li&gt;if adding another element will exceed the capacity, then create a new static array with twice (!) the capacity and copy the original elements into it.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;example&#34;&gt;Example&lt;/h5&gt;
+&lt;p&gt;Suppose we create a dynamic array with an initial capacity of two and then begind adding elements to it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1. capacity of two
+[_, _]
+* add 7
+[7, _]
+* add 9
+[7, 9]
+
+* add 3
+2. now array size is exceeded and we need to 
+create new static array with twice the capacity and copy previous elements
+[7, 9, _, _] =&amp;gt; add 3 =&amp;gt; [7, 9, 3, _]
+* add 12
+[7, 9, 3, 12]
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;lets-code-dynamic-array&#34;&gt;Lets code dynamic array!&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Array&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Iterable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; 	  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// length user thinks the array is
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; capacity &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// actual size
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// create 2 constructors - one with default capacity, the other one with parameter given.
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Array&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;8&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Array&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;capacity &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; IllegalArgumentException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Illegal Capacity: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;capacity&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		arr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[])&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// size() == 0;
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; IndexOutOfBoundsException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;set&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; T element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; IndexOutOfBoundsException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	 * quite straight forward - just sett each element to null in the list
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	 * and set length of array to 0.
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	**/&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;clear&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// if length is higher or equal to capacity, resize (double) the array
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;capacity &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				capacity &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				capacity &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*=&lt;/span&gt; 2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// create new temporar array with new capacity.
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;			T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; newArr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[])&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+
+			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// copy all previous elements to temp array
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				new_arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// and set temp array to correct array
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;			arr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; newArr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	* {1,2,3,4}.removeAt(2) =&amp;gt; 3
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	* new array =&amp;gt; {1, 2, 4};
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	*/&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;removeAt&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; removableIndex&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;removableIndex &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; removableIndex &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; IndexOutOfBoundsException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// element to be removed
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;		T dataToBeRemoved &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;removableIndex&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+
+		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// create new array with -1 size
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;		T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; newArray &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[])&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+
+		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// copy everything into new array except element at the removable index.
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; removableIndex&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// this line tells not to add element on the removable position
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;				j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--;&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				newArray&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		arr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; newArray&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		capacity &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--&lt;/span&gt;len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; dataToBeRemoved&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;remove&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Object obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;].&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				removeAt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;indexOf&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Object obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;].&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;contains&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Object obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; indexOf&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;[]&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			StrinbBuilder sb &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; StringBuilder&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;len&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;[&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				sb&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;, &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; sb&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;arr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;len &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;]&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h4&gt;
+&lt;p&gt;So now we have went through all the basic methods that appear on in dynamic array world.
+The most &amp;lsquo;complicated&amp;rsquo; methods are &lt;em&gt;removeAt()&lt;/em&gt; and &lt;em&gt;add()&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The idea behind dynamic arrays is the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;it is using static arrays to manage everything internally&lt;/li&gt;
+&lt;li&gt;when reaching to the maximum size, double the size when next element is being added&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That is it!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Big O</title>
+      <link>https://tjoosep.github.io/ds/big-o/</link>
+      <pubDate>Fri, 21 May 2021 16:01:58 +0300</pubDate>
+      
+      <guid>https://tjoosep.github.io/ds/big-o/</guid>
+      <description>&lt;h3 id=&#34;complexity-analysis&#34;&gt;Complexity Analysis&lt;/h3&gt;
+&lt;p&gt;As programmers, we often find ourselves asking the same 2 questions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;How much time does this algorithm need to finish?&lt;/li&gt;
+&lt;li&gt;How much space does this algorithm needs?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;big-o&#34;&gt;Big O&lt;/h3&gt;
+&lt;p&gt;Big O notation gives an upper bound of the complexity, meaning it will give us the worst case, helping to quantify performance as the input size becomes arbitrarily large.&lt;/p&gt;
+&lt;p&gt;For example, let us assume we need to find number 7 from the list, starting from the beginning. In this case, we do not care if 7 is in the beginning or in the middle of the list, we care if 7 is last.&lt;/p&gt;
+&lt;p&gt;In this case, it is linear, cuz we need to go through all the elements one-by-one until the end / til we find 7.&lt;/p&gt;
+&lt;p&gt;Big O only cares cares about LARGE inputs.&lt;/p&gt;
+&lt;h3 id=&#34;big-o-notations&#34;&gt;Big O Notations&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Notation&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Constant time&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Logarithmic time&lt;/td&gt;
+&lt;td&gt;O(log(n))&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Linear time&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Linearithmic time&lt;/td&gt;
+&lt;td&gt;O(nlog(n))&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Quadric time&lt;/td&gt;
+&lt;td&gt;O(n^2)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cubic time&lt;/td&gt;
+&lt;td&gt;O(n^3)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Exponential time&lt;/td&gt;
+&lt;td&gt;O(b^n), b &amp;gt; 1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Factorial time&lt;/td&gt;
+&lt;td&gt;O(n!)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
+&lt;p&gt;O(n + c) = O(n)&lt;/p&gt;
+&lt;p&gt;O(cn) = O(n), c &amp;gt; 0&lt;/p&gt;
+&lt;p&gt;where n is input and c is constant&lt;/p&gt;
+&lt;h5 id=&#34;examples&#34;&gt;Examples:&lt;/h5&gt;
+&lt;p&gt;f(n) = 7n^3 + 15n^2 + 8&lt;/p&gt;
+&lt;p&gt;O(f(n)) = O(n^3)&lt;/p&gt;
+&lt;p&gt;We do not care about constants because basically they do not matter.&lt;/p&gt;
+&lt;p&gt;================================================&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s have a look the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; n&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		     &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;^&lt;/span&gt; 
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Why this is O(n^2)?&lt;/p&gt;
+&lt;p&gt;It goes something like this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;for the beginning, let&amp;rsquo;s focus on the second loop.&lt;/li&gt;
+&lt;li&gt;since &lt;em&gt;i&lt;/em&gt; goes from [0, n) the amount of looping done is directly determine by what &lt;em&gt;i&lt;/em&gt; is.&lt;/li&gt;
+&lt;li&gt;remark that if &lt;em&gt;i = 0&lt;/em&gt;, we do &lt;em&gt;n&lt;/em&gt; work, if &lt;em&gt;i=1&lt;/em&gt;, we do &lt;em&gt;n-1&lt;/em&gt; work, if &lt;em&gt;i = 2&lt;/em&gt;, we do &lt;em&gt;n - 2&lt;/em&gt; work, etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So the question then becomes what is:&lt;/p&gt;
+&lt;p&gt;(n) + (n-1) + (n-2) + (n-3) + &amp;hellip; + 3 + 2 + 1?&lt;/p&gt;
+&lt;p&gt;This turns out to be n(n+1) / 2,&lt;/p&gt;
+&lt;p&gt;so big O becomes
+O(n(n + 1) / 2) = O(n^2/ 2 + n/2) = O(n^2)&lt;/p&gt;
+&lt;h4 id=&#34;example&#34;&gt;Example:&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-code&#34; data-lang=&#34;code&#34;&gt;i = 0;
+while i &amp;lt; 3 * n Do
+	j = 10
+	while j &amp;lt;= 50 Do
+		j = j + 1
+	j = 0
+	while j &amp;lt; n * n * n Do 
+		j = j + 2
+	i = i + 1
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class=&#34;language-code&#34; data-lang=&#34;code&#34;&gt;We will get the following function:
+f(n) = 3n * (40 + n^3/2) = 3n / 40 + 3n^4/2 
+
+To break it down:
+* 3n ==&amp;gt; outer while loop, which goes through 3*n
+* (40 + n^3/2) ==&amp;gt; 40 comes from the first inner loop since 
+j = 10 and we go constant amount times (in this case 50), 
+and n^3 / 2 comes n*n*n and j is incremented 2 times each time. 
+
+since inner while loops are &#39;inner&#39;, we need to multiply them.
+
+And to put it all together we get 
+3n / 40  + 3n^4 / 2
+
+which in big O notation becomes
+O(f(n)) = O(n^4)
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;classic-examples&#34;&gt;Classic examples:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;find all the subsets - O(2^n)&lt;/li&gt;
+&lt;li&gt;find all permutations of string - O(n!)&lt;/li&gt;
+&lt;li&gt;sorting using mergesort = O(nlog(n))&lt;/li&gt;
+&lt;li&gt;iterating over all the cells in matirx of size x by m - O(nm)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;notes&#34;&gt;Notes&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;usually, we get O(log(n)) when each iteration makes input (half) smaller&lt;/li&gt;
+&lt;li&gt;usually, we get O(n) when, well, we have to iterate the input all the way through.&lt;/li&gt;
+&lt;li&gt;usually, we get O(n^2), when loop in a loop.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to data structures</title>
+      <link>https://tjoosep.github.io/ds/intro-to-ds/</link>
+      <pubDate>Fri, 21 May 2021 16:01:58 +0300</pubDate>
+      
+      <guid>https://tjoosep.github.io/ds/intro-to-ds/</guid>
+      <description>&lt;h3 id=&#34;what-is-a-data-structure&#34;&gt;What is a Data Structure?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;a data structures (DS) is a way of organizing data so that it can be used effectively.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-are-they-important&#34;&gt;Why are they important?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;They are essential component in creating fast and powerful algorithms.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;They help to manage and organize data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;sidenote&#34;&gt;Sidenote!&lt;/h3&gt;
+&lt;p&gt;The ones who understand how, when
+DS make the difference betweento OK program and outstanding program.&lt;/p&gt;
+&lt;h3 id=&#34;abstract-data-type-adt&#34;&gt;Abstract Data Type (ADT)&lt;/h3&gt;
+&lt;p&gt;An abstract data type is an abstraction of a data structure which provides only the interface to which a data structure must adhere to.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;ADT&lt;/th&gt;
+&lt;th&gt;DS&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;List&lt;/td&gt;
+&lt;td&gt;Linked List, Dynamic Array&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Map&lt;/td&gt;
+&lt;td&gt;Tree map, Hash map / Hash table&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Queue&lt;/td&gt;
+&lt;td&gt;Array based queue, Stack based queue&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Vehicle&lt;/td&gt;
+&lt;td&gt;Bicycle, Smart car&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;ADT gives the skin, DS adds muscles and bones&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Polymorphism</title>
       <link>https://tjoosep.github.io/posts/polymorphism/</link>
       <pubDate>Thu, 01 Apr 2021 16:08:10 +0300</pubDate>

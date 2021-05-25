@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Dynamic Array&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Dynamic Array" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">DS</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Dynamic Array</h1><p class="article date">2021-05-24</p></section><article class="article markdown-body"><p>Probably the most fundamental data structure.</p>
+<h4 id="what-is-an-array">What is an Array?</h4>
+<ul>
+<li>a static array is an fixed length container containing <em>n</em> elements indexable from range [0, n-1].</li>
+</ul>
+<h5 id="what-is-_indexable_">What is <em>indexable</em>?</h5>
+<p>It means that each slot in the array can be referenced with a number.</p>
+<h4 id="when-and-where-is-array-used">When and where is Array used?</h4>
+<ol>
+<li>
+<p>sotring and accessing sequential data</p>
+</li>
+<li>
+<p>temporarily storing objects</p>
+</li>
+<li>
+<p>used by I/O routines as buffers</p>
+</li>
+<li>
+<p>lookup tables and invers lookup tables</p>
+</li>
+<li>
+<p>can be used to return multiple values from a function</p>
+</li>
+<li>
+<p>used in dynamic programming to cahce answers to subproblems</p>
+</li>
+</ol>
+<h4 id="complexity">Complexity</h4>
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>static array</th>
+<th>dynamic array</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>access</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>search</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>insert</td>
+<td>N/A</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>append</td>
+<td>N/A</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>N/A</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>Access in static and in dynamic array are both constant. That is because both of them are indexable.</p>
+</li>
+<li>
+<p>Search is linear time. Potentially, we have to traverse all the elements in array. For exaple if element is not in the list.</p>
+</li>
+<li>
+<p>Insert, append and deletion are not available for staty arrays, because static arrays are fixed size. So it does not make any sense.</p>
+</li>
+<li>
+<p>Insertion for dynamic array, however, is linear, because you potentially have to shift every element to the right side, copy everything to new static array, add new element and put everything back.</p>
+</li>
+<li>
+<p>Append is constant. We know the size of static inner array and thus just add new element to new <em>indexable</em> position.</p>
+</li>
+<li>
+<p>Deleteion is linear, because you have to to shift every element like in insertion and copy every element into static array.</p>
+</li>
+</ul>
+<p>Below is and example of array with its elements {12, 44, -5, 22} and arrows are showing its indexes.
+<img  src="/array.png"
+        alt="array"/></p>
+<p>Array indexing is zero-based, meaning the first element is found in position zero.</p>
+<pre><code>array[0] = 12
+array[1] = 44
+array[2] = -5 
+array[3] = 22
+array[4] = error, Index out of bounds. 
+</code></pre><p>If we want to add new element to already taken position, the previous element will be overwritten.
+For example, lets say we want to add element 18 to the third position (index=2). The array will become:</p>
+<pre><code>array[2] := 18
+
+array[0] = 12
+array[1] = 44
+array[2] = 18 =&gt; -5 is overwritten. 
+array[3] = 22
+</code></pre><h4 id="operations">Operations</h4>
+<p>Dyanamic array can grow and shrink in size.</p>
+<pre><code>Starting array: A = [34, 4]
+A.add(-2) =&gt; A = [34, 4, -2]
+A.add(34) =&gt; A = [34, 4, -2, 34]
+A.remove(4) =&gt; &gt; A = [34, -2, 34]
+</code></pre><h4 id="how-to-implement-dynamic-array">How to implement dynamic array?</h4>
+<ol>
+<li>cretea a static array with an inital capacity</li>
+<li>add elements to the underlying static array, keeping track of the number of the elements.</li>
+<li>if adding another element will exceed the capacity, then create a new static array with twice (!) the capacity and copy the original elements into it.</li>
+</ol>
+<h5 id="example">Example</h5>
+<p>Suppose we create a dynamic array with an initial capacity of two and then begind adding elements to it.</p>
+<pre><code>1. capacity of two
+[_, _]
+* add 7
+[7, _]
+* add 9
+[7, 9]
+
+* add 3
+2. now array size is exceeded and we need to 
+create new static array with twice the capacity and copy previous elements
+[7, 9, _, _] =&gt; add 3 =&gt; [7, 9, 3, _]
+* add 12
+[7, 9, 3, 12]
+</code></pre><h3 id="lets-code-dynamic-array">Lets code dynamic array!</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Array</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">implements</span> Iterable<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">private</span> T<span style="color:#000;font-weight:bold">[]</span> arr<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> len <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> 	  <span style="color:#998;font-style:italic">// length user thinks the array is
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> capacity <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> <span style="color:#998;font-style:italic">// actual size
+</span><span style="color:#998;font-style:italic"></span>
+	<span style="color:#998;font-style:italic">// create 2 constructors - one with default capacity, the other one with parameter given.
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Array</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">(</span>8<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Array</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> capacity<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>capacity <span style="color:#000;font-weight:bold">&lt;</span> 0<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> IllegalArgumentException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Illegal Capacity: &#34;</span> <span style="color:#000;font-weight:bold">+</span> capacity<span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">capacity</span> <span style="color:#000;font-weight:bold">=</span> capacity<span style="color:#000;font-weight:bold">;</span>
+		arr <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span>T<span style="color:#000;font-weight:bold">[])</span> <span style="color:#000;font-weight:bold">new</span> Object<span style="color:#000;font-weight:bold">[</span>capacity<span style="color:#000;font-weight:bold">];</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> len<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isEmpty</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// size() == 0;
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">return</span> len <span style="color:#000;font-weight:bold">==</span> 0<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> index<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>index <span style="color:#000;font-weight:bold">&gt;=</span> len<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> IndexOutOfBoundsException<span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">return</span> arr<span style="color:#000;font-weight:bold">[</span>index<span style="color:#000;font-weight:bold">];</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">set</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> index<span style="color:#000;font-weight:bold">,</span> T element<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>index <span style="color:#000;font-weight:bold">&gt;=</span> len<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> IndexOutOfBoundsException<span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		arr<span style="color:#000;font-weight:bold">[</span>index<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> element<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic">	 * quite straight forward - just sett each element to null in the list
+</span><span style="color:#998;font-style:italic">	 * and set length of array to 0.
+</span><span style="color:#998;font-style:italic">	**/</span>
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">clear</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> capacity<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+			arr<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		len <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">add</span><span style="color:#000;font-weight:bold">(</span>T elem<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// if length is higher or equal to capacity, resize (double) the array
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>len <span style="color:#000;font-weight:bold">+</span> 1 <span style="color:#000;font-weight:bold">&gt;=</span> capacity<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>capacity <span style="color:#000;font-weight:bold">==</span> 0<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+				capacity <span style="color:#000;font-weight:bold">=</span> 1<span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+				capacity <span style="color:#000;font-weight:bold">*=</span> 2<span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+
+			<span style="color:#998;font-style:italic">// create new temporar array with new capacity.
+</span><span style="color:#998;font-style:italic"></span>			T<span style="color:#000;font-weight:bold">[]</span> newArr <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span>T<span style="color:#000;font-weight:bold">[])</span> <span style="color:#000;font-weight:bold">new</span> Object<span style="color:#000;font-weight:bold">[</span>capacity<span style="color:#000;font-weight:bold">];</span>
+
+			<span style="color:#998;font-style:italic">// copy all previous elements to temp array
+</span><span style="color:#998;font-style:italic"></span>			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> len<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+				new_arr<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> arr<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">];</span>
+			<span style="color:#000;font-weight:bold">}</span>
+
+			<span style="color:#998;font-style:italic">// and set temp array to correct array
+</span><span style="color:#998;font-style:italic"></span>			arr <span style="color:#000;font-weight:bold">=</span> newArr<span style="color:#000;font-weight:bold">;</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		arr<span style="color:#000;font-weight:bold">[</span>len<span style="color:#000;font-weight:bold">++]</span> <span style="color:#000;font-weight:bold">=</span> elem<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic">	* {1,2,3,4}.removeAt(2) =&gt; 3
+</span><span style="color:#998;font-style:italic">	* new array =&gt; {1, 2, 4};
+</span><span style="color:#998;font-style:italic">	*/</span>
+	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">removeAt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> removableIndex<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>removableIndex <span style="color:#000;font-weight:bold">&gt;=</span> len <span style="color:#000;font-weight:bold">&amp;&amp;</span> removableIndex <span style="color:#000;font-weight:bold">&lt;</span> 0<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> IndexOutOfBoundsException<span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#998;font-style:italic">// element to be removed
+</span><span style="color:#998;font-style:italic"></span>		T dataToBeRemoved <span style="color:#000;font-weight:bold">=</span> arr<span style="color:#000;font-weight:bold">[</span>removableIndex<span style="color:#000;font-weight:bold">];</span>
+
+		<span style="color:#998;font-style:italic">// create new array with -1 size
+</span><span style="color:#998;font-style:italic"></span>		T<span style="color:#000;font-weight:bold">[]</span> newArray <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span>T<span style="color:#000;font-weight:bold">[])</span> <span style="color:#000;font-weight:bold">new</span> Object<span style="color:#000;font-weight:bold">[</span>len <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">];</span>
+
+		<span style="color:#998;font-style:italic">// copy everything into new array except element at the removable index.
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">,</span> j <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> len<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++,</span> j<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>i <span style="color:#000;font-weight:bold">==</span> removableIndex<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+				<span style="color:#998;font-style:italic">// this line tells not to add element on the removable position
+</span><span style="color:#998;font-style:italic"></span>				j<span style="color:#000;font-weight:bold">--;</span>
+			<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+				newArray<span style="color:#000;font-weight:bold">[</span>j<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> arr<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">];</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		arr <span style="color:#000;font-weight:bold">=</span> newArray<span style="color:#000;font-weight:bold">;</span>
+		capacity <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">--</span>len<span style="color:#000;font-weight:bold">;</span>
+		<span style="color:#000;font-weight:bold">return</span> dataToBeRemoved<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">remove</span><span style="color:#000;font-weight:bold">(</span>Object obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> len<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>arr<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">].</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span>obj<span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+				removeAt<span style="color:#000;font-weight:bold">(</span>i<span style="color:#000;font-weight:bold">);</span>
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">indexOf</span><span style="color:#000;font-weight:bold">(</span>Object obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> len<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>arr<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">].</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span>obj<span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+				<span style="color:#000;font-weight:bold">return</span> i<span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">-</span>1<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">contains</span><span style="color:#000;font-weight:bold">(</span>Object obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> indexOf<span style="color:#000;font-weight:bold">(</span>obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">-</span>1<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+	<span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">toString</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>len <span style="color:#000;font-weight:bold">==</span> 0<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#d14">&#34;[]&#34;</span><span style="color:#000;font-weight:bold">;</span>
+		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+			StrinbBuilder sb <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">(</span>len<span style="color:#000;font-weight:bold">).</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;[&#34;</span><span style="color:#000;font-weight:bold">);</span>
+			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> len <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+				sb<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>arr<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34;, &#34;</span><span style="color:#000;font-weight:bold">);</span>
+			<span style="color:#000;font-weight:bold">}</span>
+			<span style="color:#000;font-weight:bold">return</span> sb<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>arr<span style="color:#000;font-weight:bold">[</span>len <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34;]&#34;</span><span style="color:#000;font-weight:bold">).</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h4 id="conclusion">Conclusion</h4>
+<p>So now we have went through all the basic methods that appear on in dynamic array world.
+The most &lsquo;complicated&rsquo; methods are <em>removeAt()</em> and <em>add()</em>.</p>
+<p>The idea behind dynamic arrays is the following:</p>
+<ul>
+<li>it is using static arrays to manage everything internally</li>
+<li>when reaching to the maximum size, double the size when next element is being added</li>
+</ul>
+<p>That is it!</p>
+</article><section class="article labels"><a class="tag" href=/tags/ds/>ds</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/ds/big-o/"><span class="iconfont icon-article"></span>Big O</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

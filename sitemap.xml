@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
+    <loc>https://tjoosep.github.io/ds/</loc><lastmod>2021-05-24T15:47:21+03:00</lastmod></url><url>
+    <loc>https://tjoosep.github.io/tags/ds/</loc><lastmod>2021-05-24T15:47:21+03:00</lastmod></url><url>
+    <loc>https://tjoosep.github.io/ds/dynamic-array/</loc><lastmod>2021-05-24T15:47:21+03:00</lastmod></url><url>
+    <loc>https://tjoosep.github.io/tags/</loc><lastmod>2021-05-24T15:47:21+03:00</lastmod></url><url>
+    <loc>https://tjoosep.github.io/</loc><lastmod>2021-05-24T15:47:21+03:00</lastmod></url><url>
+    <loc>https://tjoosep.github.io/ds/big-o/</loc><lastmod>2021-05-21T16:01:58+03:00</lastmod></url><url>
+    <loc>https://tjoosep.github.io/ds/intro-to-ds/</loc><lastmod>2021-05-21T16:01:58+03:00</lastmod></url><url>
     <loc>https://tjoosep.github.io/tags/oop/</loc><lastmod>2021-04-01T16:08:10+03:00</lastmod></url><url>
     <loc>https://tjoosep.github.io/posts/polymorphism/</loc><lastmod>2021-04-01T16:08:10+03:00</lastmod></url><url>
     <loc>https://tjoosep.github.io/posts/</loc><lastmod>2021-04-01T16:08:10+03:00</lastmod></url><url>
-    <loc>https://tjoosep.github.io/tags/</loc><lastmod>2021-04-01T16:08:10+03:00</lastmod></url><url>
-    <loc>https://tjoosep.github.io/</loc><lastmod>2021-04-01T16:08:10+03:00</lastmod></url><url>
     <loc>https://tjoosep.github.io/posts/abstraction/</loc><lastmod>2021-04-01T16:06:31+03:00</lastmod></url><url>
     <loc>https://tjoosep.github.io/posts/encapsulation/</loc><lastmod>2021-04-01T14:41:57+03:00</lastmod></url><url>
     <loc>https://tjoosep.github.io/posts/inheritance/</loc><lastmod>2021-03-26T14:15:50+02:00</lastmod></url><url>
