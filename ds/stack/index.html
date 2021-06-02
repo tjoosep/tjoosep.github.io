@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Stack&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Stack" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">DS</a><a class="nav item" href="/oop">OOP</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Stack</h1><p class="article date">2021-05-27</p></section><article class="article markdown-body"><h4 id="what-is-stack">What is Stack?</h4>
+<p>A stack is one-ended linear data structure which models a real world stack by having two primary operations - push and pop.</p>
+<ul>
+<li>push =&gt; add top of the data pile.</li>
+<li>pop  =&gt; take from the top of data pile.</li>
+</ul>
+<p>Everything happens on the top.</p>
+<h4 id="where-is-stack-used">Where is stack used?</h4>
+<ul>
+<li>used by undo command.</li>
+<li>used in compilers - e.g checking for matching brackets and braces.</li>
+<li>used in recursion.</li>
+<li>can be used to do a depth first search (DFS).</li>
+</ul>
+<h4 id="complexity-analysis">Complexity Analysis</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pushing</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>popping</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>peeking</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>searching</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>size</td>
+<td>O(1)</td>
+</tr>
+</tbody>
+</table>
+<p>Nothing much to comment here.</p>
+<ul>
+<li>Pushing, popping, peeking and size are pointers to specific element, thus O(1).</li>
+<li>To search element, we need to go through whole stack, thus O(n).</li>
+</ul>
+<h4 id="bracket-example">Bracket example</h4>
+<pre><code>let S be a stack
+
+for bracket in brackets:
+	reversed_bracket = getReversedBracket(bracket)
+	if isLeftBracket(bracket): 
+		S.push(bracket)
+	else if S.isEmpty() or S.pop() != reversed_bracket:
+		return false; // invalid
+
+return S.isEmpty()    // empty then good
+</code></pre><h4 id="implementation">Implementation</h4>
+<p>Instructions</p>
+<pre><code>push(4)
+push(2)
+push(5)
+push(13)
+
+null
+push(4): 4 -&gt; null
+push(2): 2 -&gt; 4 -&gt; null
+push(5): 5 -&gt; 2 -&gt; 4 -&gt; null
+push(13): 13 -&gt; 5 -&gt; 2 -&gt; 4 -&gt; null
+
+Head is pointing always to the top element.
+
+popping is reverse method to the popping while handling memory
+</code></pre><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Stack</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">implements</span> Iterable<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#998;font-style:italic">// or use the self created linked list
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">private</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LinkedList</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> list <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LinkedList</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;();</span>
+
+	<span style="color:#998;font-style:italic">// empty stack
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Stack</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">// create stack with initial element
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Stack</span><span style="color:#000;font-weight:bold">(</span>T elem<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		push<span style="color:#000;font-weight:bold">(</span>elem<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">// nr of elements in stack
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">size</span><span style="color:#000;font-weight:bold">()</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isEmpty</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> size<span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">==</span> 0<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">push</span><span style="color:#000;font-weight:bold">(</span>T elem<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">addLast</span><span style="color:#000;font-weight:bold">(</span>elem<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">pop</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> EmptyStackException<span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">removeLast</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">peek</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> EmptyStackException<span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">peekLast</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+	<span style="color:#000;font-weight:bold">public</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Iterator</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">iterator</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">iterator</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h4 id="conclusion">Conclusion</h4>
+<p>If you understand how linkedlist works, then stack is quite easy to implement.
+Internally you will use list where you take out elements. In list, each element will be at the end of the list.
+In stack, popping and pushing will manage first element.</p>
+<p>So taking out last element from linked list is equal to taking out first element of stack. If that made sense.</p>
+</article><section class="article labels"><a class="tag" href=/tags/ds/>ds</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/ds/queue/"><span class="iconfont icon-article"></span>Queue</a></p><p><a class="link" href="/ds/linked-list/"><span class="iconfont icon-article"></span>Linked List</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Linked List&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Linked List" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">DS</a><a class="nav item" href="/oop">OOP</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Linked List</h1><p class="article date">2021-05-25</p></section><article class="article markdown-body"><p>The next chapter after dynamic arrays would be linked list.</p>
+<h4 id="what-is-linked-list">What is linked list?</h4>
+<p>Linked list is a sequential list of nodes that hold data which point to other nodes containing also some data.</p>
+<pre><code>( data ) ==&gt; ( data ) ==&gt; ( data ) ==&gt; null. 
+</code></pre><p>Each node has pointer to the next data, while last node is null.</p>
+<h4 id="where-are-linked-lists-used">Where are linked lists used?</h4>
+<ul>
+<li>used in list, stack and queues.</li>
+<li>greate for creating circular lists.</li>
+<li>can easily model real world objects, like trains.</li>
+<li>often used in adjacency lists for graphs</li>
+</ul>
+<h4 id="terminology">Terminology</h4>
+<pre><code>HEAD: first element of the list
+TAIL: last element of the list
+Pointer: reference to the next element
+Node: object that contains pointer and data
+</code></pre><h4 id="sinly-and-doubly-linked-lists">Sinly and Doubly linked lists</h4>
+<p>There are two types of linked lists: doubly linked list and sinly linked list</p>
+<ul>
+<li>Doubly linked list holds data, pointer to the next AND pointer to the previous object.</li>
+<li>Singly linked list hold data and pointer to the next object.</li>
+</ul>
+<p>So the obvious advantage of doubly linked list is that it can be traversed backwards but it takes 2x more memory,
+while singly linked list uses less memory and it is easier to implement, but takes some effort to get previous element.</p>
+<h4 id="implementation-details---add-and-remove">Implementation details - add and remove</h4>
+<p>Add object into Singly linked list</p>
+<pre><code>Insert 11 where the third node (7) is. 
+
+1. starting linked list: ( 5 ) =&gt; ( 23 ) =&gt; ( 7 ) =&gt; ( 13 )
+2. travers to the correct position.
+3. create new object ( 11 ).
+4. place new object into correct position: 
+	( 5 ) =&gt; ( 23 ) =&gt; ( 7 ) =&gt; ( 13 )
+					   ( 11 )
+5. set new objects pointer to the object that was there before. 
+( 11 ) =&gt; ( 7 )
+6. set previous object pointer to point the new object.
+( 23 ) =&gt; ( 11 )
+7. flat out the list
+( 5 ) =&gt; ( 23 ) =&gt; ( 11 ) =&gt; ( 7 ) =&gt; ( 13 )
+</code></pre><p>Add object into Doubly linked list</p>
+<pre><code>Insert 11 where the third node (7) is.
+
+1. starting linked list: ( 5 ) &lt;=&gt; ( 23 ) &lt;=&gt; ( 7 ) &lt;=&gt; ( 13 )
+2. travers to the correct position.
+3. create new object ( 11 ).
+4. place new object into correct position: 
+	( 5 ) &lt;=&gt; ( 23 ) &lt;=&gt; ( 7 ) &lt;=&gt; ( 13 )
+					   ( 11 )
+5. set new objects pointer to the object that was there before 
+   AND this time point to the previous object as well. 
+ &lt;= ( 11 ) &lt;=&gt; ( 7 )
+6. set previous object pointer to point the new object.
+( 23 ) =&gt; ( 11 )
+7. flat out the list
+( 5 ) &lt;=&gt; ( 23 ) &lt;=&gt; (11) &lt;=&gt; ( 7 ) &lt;=&gt; ( 13 )
+</code></pre><p>Remove object from Singly linked list</p>
+<pre><code>Remove 7 from the list.
+
+1. starting list: ( 5 ) =&gt; ( 23 ) =&gt; ( 11 ) =&gt; ( 7 ) =&gt; ( 13 )
+2. use 2 pointers - call them (F)irst and (S)econd - 
+   starting from the head and next to the head. 
+( 5 ) =&gt; ( 23 ) =&gt; ( 11 ) =&gt; ( 7 ) =&gt; ( 13 )
+  F        S
+3. traverse both pointers until second pointer finds removable element. 
+( 5 ) =&gt; ( 23 ) =&gt; ( 11 ) =&gt; ( 7 ) =&gt; ( 13 )
+                      F        S
+4. create temp variable that indicates removable object ( 7 ).
+5. move second pointer to the next object ( 13 ) 
+   (if there is, otherwise null).
+( 5 ) =&gt; ( 23 ) =&gt; ( 11 ) =&gt; ( 7 ) =&gt; ( 13 )
+                      F                 S
+6. point first pointer to the second pointers element. 
+7. remove temp variable and its pointer. 
+8. clean memory if needed. 
+</code></pre><p>Remove object from Doubly linked list</p>
+<pre><code>Remove 7 from the list.
+
+1. starting list: ( 5 ) &lt;=&gt; ( 23 ) &lt;=&gt; ( 11 ) &lt;=&gt; ( 7 ) &lt;=&gt; ( 13 )
+2. use 1 pointer starting form the head. 
+   we need one because doubly linked list objects 
+   have already pointers to next and previous objects. 
+3. traverse until we have found the removable object ( 7 ).
+4. make changes to removable object previous (11) and next object's pointers (13), 
+   so that they point to each other instead of removable object.
+5. remove removable object. 
+6. clean memory if needed
+</code></pre><p>The main takeaway is that we need to manage the pointers!</p>
+<h4 id="complexity">Complexity</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Singly</th>
+<th>Doubly</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Search</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Insert at head</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Insert at tail</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Remove at head</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Remove at tail</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Remove middle</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>searching is linear, because we have to traverse all the elements in the worst case.</li>
+<li>insertion to the head and tail is constant because we have pointers to these objects, thus we know where they are.</li>
+<li>remove at head is constant in both cases for the same reasons as before.</li>
+<li>remove at tail is linear for sinly linked list because we do not know what is the object previous to the tail is thus we have to traverse the whole list.
+This does not apply to doubly linked list because we know the object previous to the last.</li>
+<li>remove from the middle is linear because in the worst case we have to seek through n-1 objects.</li>
+</ul>
+<h4 id="implementation-of-doubly-linked-list">Implementation of doubly linked list</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">DoublyLinkedList</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">implements</span> Iterable <span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> size <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> head <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> tail <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#998;font-style:italic">// data representation class
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Node</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">{</span>
+		T data<span style="color:#000;font-weight:bold">;</span>
+		Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> next<span style="color:#000;font-weight:bold">;</span>	
+		Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> prev<span style="color:#000;font-weight:bold">;</span>
+
+		<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Node</span><span style="color:#000;font-weight:bold">(</span>T data<span style="color:#000;font-weight:bold">,</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> previous<span style="color:#000;font-weight:bold">,</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> next<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span> <span style="color:#000;font-weight:bold">=</span> data<span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span> <span style="color:#000;font-weight:bold">=</span> previous<span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span> <span style="color:#000;font-weight:bold">=</span> next
+		<span style="color:#000;font-weight:bold">}</span>
+
+		<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+		<span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">toString</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">return</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> size<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isEmpty</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// return size == 0;
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">return</span> size<span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">==</span> 0<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">/** 
+</span><span style="color:#998;font-style:italic">	 * Clear the linked list, O(n)
+</span><span style="color:#998;font-style:italic">	 * traverse whole list while setting everything to null
+</span><span style="color:#998;font-style:italic">	**/</span>
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">clear</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> traverser <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span> <span style="color:#998;font-style:italic">// start to traverse from the head.
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>traverser <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> next <span style="color:#000;font-weight:bold">=</span> traverser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span>
+			traverser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+			traverser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+			traverser<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+			traverser <span style="color:#000;font-weight:bold">=</span> next<span style="color:#000;font-weight:bold">;</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		head <span style="color:#000;font-weight:bold">=</span> tail <span style="color:#000;font-weight:bold">=</span> traverser <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+		size <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">add</span><span style="color:#000;font-weight:bold">(</span>T element<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		addLast<span style="color:#000;font-weight:bold">(</span>element<span style="color:#000;font-weight:bold">);</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">addLast</span><span style="color:#000;font-weight:bold">(</span>T element<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			head <span style="color:#000;font-weight:bold">=</span> tail <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;(</span>element<span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">);</span>
+ 		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+ 			Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> newObject <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">(</span>element<span style="color:#000;font-weight:bold">,</span> tail<span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">);</span>
+ 			tail<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span> <span style="color:#000;font-weight:bold">=</span> newObject<span style="color:#000;font-weight:bold">;</span>
+ 			tail <span style="color:#000;font-weight:bold">=</span> newObject<span style="color:#000;font-weight:bold">;</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		size<span style="color:#000;font-weight:bold">++;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic"> 	 * Add element to the first - head - position, O(1)
+</span><span style="color:#998;font-style:italic"> 	**/</span>
+ 	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">addFirst</span><span style="color:#000;font-weight:bold">(</span>T element<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#998;font-style:italic">// previous and next pointers are null, cuz no element in list
+</span><span style="color:#998;font-style:italic"></span> 			head <span style="color:#000;font-weight:bold">=</span> tail <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">(</span>element<span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">);</span>
+ 		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+            <span style="color:#998;font-style:italic">// new object refers to the current head, i.e new &lt;=&gt; old &lt;=&gt; ...
+</span><span style="color:#998;font-style:italic"></span>            Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> newObject <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">(</span>element<span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">,</span> head<span style="color:#000;font-weight:bold">);</span>
+            <span style="color:#998;font-style:italic">// current head&#39;s previous element refers to the new addable object	
+</span><span style="color:#998;font-style:italic"></span>            head<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span> <span style="color:#000;font-weight:bold">=</span> newObject<span style="color:#000;font-weight:bold">;</span>
+            <span style="color:#998;font-style:italic">// head is the new object
+</span><span style="color:#998;font-style:italic"></span>            head <span style="color:#000;font-weight:bold">=</span> newObject<span style="color:#000;font-weight:bold">;</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+ 		size<span style="color:#000;font-weight:bold">++;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">peekFirst</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;The list is empty!&#34;</span><span style="color:#000;font-weight:bold">);</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">return</span> head<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span><span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">peekLast</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;The list is empty!&#34;</span><span style="color:#000;font-weight:bold">);</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">return</span> tail<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span><span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#998;font-style:italic">// Remove the first value at the head of the list, O(1)
+</span><span style="color:#998;font-style:italic"></span> 	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">removeFirst</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;The list is empty&#34;</span><span style="color:#000;font-weight:bold">);</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#998;font-style:italic">// extract the data and move head pointer to the next node
+</span><span style="color:#998;font-style:italic"></span> 		T data <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span><span style="color:#000;font-weight:bold">;</span>
+ 		head <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span>
+ 		size<span style="color:#000;font-weight:bold">--;</span>
+
+ 		<span style="color:#998;font-style:italic">// if the list is now empty set the tail to null
+</span><span style="color:#998;font-style:italic"></span> 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			tail <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+ 		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+ 			head<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#998;font-style:italic">// return the removed data
+</span><span style="color:#998;font-style:italic"></span> 		<span style="color:#000;font-weight:bold">return</span> data<span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">removeLast</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;The list is empty&#34;</span><span style="color:#000;font-weight:bold">);</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		T data <span style="color:#000;font-weight:bold">=</span> tail<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span>
+ 		tail <span style="color:#000;font-weight:bold">=</span> tail<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span><span style="color:#000;font-weight:bold">;</span>
+ 		size<span style="color:#000;font-weight:bold">--;</span>
+
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+ 			head <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+ 		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+ 			tail<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#000;font-weight:bold">return</span> data<span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#998;font-style:italic">// remove a node at a particular index, O(n)
+</span><span style="color:#998;font-style:italic"></span> 	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">removeAt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> index<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>index <span style="color:#000;font-weight:bold">&lt;</span> 0 <span style="color:#000;font-weight:bold">||</span> index <span style="color:#000;font-weight:bold">&gt;=</span> size<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> IllegalArgumentException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Invalid index&#34;</span><span style="color:#000;font-weight:bold">);</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#458;font-weight:bold">int</span> i<span style="color:#000;font-weight:bold">;</span>
+ 		Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> trav<span style="color:#000;font-weight:bold">;</span>
+ 		<span style="color:#998;font-style:italic">// search from the front of the list
+</span><span style="color:#998;font-style:italic"></span> 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>index <span style="color:#000;font-weight:bold">&lt;</span> size <span style="color:#000;font-weight:bold">/</span> 2<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">,</span> trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">!=</span> index<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+ 				trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>i <span style="color:#000;font-weight:bold">=</span> size <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">,</span> trav <span style="color:#000;font-weight:bold">=</span> tail<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">!=</span> index<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">--)</span> <span style="color:#000;font-weight:bold">{</span>
+ 				trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span><span style="color:#000;font-weight:bold">;</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#000;font-weight:bold">return</span> remove<span style="color:#000;font-weight:bold">(</span>trav<span style="color:#000;font-weight:bold">);</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">private</span> T <span style="color:#900;font-weight:bold">remove</span><span style="color:#000;font-weight:bold">(</span>Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> node<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#998;font-style:italic">// handle those cases where removable node is first or last
+</span><span style="color:#998;font-style:italic"></span> 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span> <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">return</span> removeFirst<span style="color:#000;font-weight:bold">();</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span> <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">return</span> removeLast<span style="color:#000;font-weight:bold">();</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#998;font-style:italic">// refere correct nodes 
+</span><span style="color:#998;font-style:italic"></span> 		node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span> <span style="color:#000;font-weight:bold">=</span> node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span><span style="color:#000;font-weight:bold">;</span>
+ 		node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span> <span style="color:#000;font-weight:bold">=</span> node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span>
+
+ 		T data <span style="color:#000;font-weight:bold">=</span> node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span><span style="color:#000;font-weight:bold">;</span>
+
+ 		<span style="color:#998;font-style:italic">// cleanup
+</span><span style="color:#998;font-style:italic"></span> 		node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+ 		node <span style="color:#000;font-weight:bold">=</span> node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">prev</span> <span style="color:#000;font-weight:bold">=</span> node<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+
+ 		size<span style="color:#000;font-weight:bold">--;</span>
+
+ 		<span style="color:#000;font-weight:bold">return</span> data<span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">remove</span><span style="color:#000;font-weight:bold">(</span>Object obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span>
+
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>obj <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 				remove<span style="color:#000;font-weight:bold">(</span>trav<span style="color:#000;font-weight:bold">);</span>
+ 				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">;</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#998;font-style:italic">// search for the object
+</span><span style="color:#998;font-style:italic"></span> 			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 				<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>obj<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span>trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+ 					remove<span style="color:#000;font-weight:bold">(</span>trav<span style="color:#000;font-weight:bold">);</span>
+ 					<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">;</span>
+ 				<span style="color:#000;font-weight:bold">}</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span><span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">indexOf</span><span style="color:#000;font-weight:bold">(</span>Object obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#458;font-weight:bold">int</span> index <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+ 		Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span>
+
+ 		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>obj <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span> index<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+ 				<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span> <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 					<span style="color:#000;font-weight:bold">return</span> index<span style="color:#000;font-weight:bold">;</span>
+ 				<span style="color:#000;font-weight:bold">}</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span>trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span> trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span> index<span style="color:#000;font-weight:bold">++)</span> <span style="color:#000;font-weight:bold">{</span>
+ 				<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>obj<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">equals</span><span style="color:#000;font-weight:bold">(</span>trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+ 					<span style="color:#000;font-weight:bold">return</span> index<span style="color:#000;font-weight:bold">;</span>
+ 				<span style="color:#000;font-weight:bold">}</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+
+ 		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">-</span>1<span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">contains</span><span style="color:#000;font-weight:bold">(</span>Object obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">return</span> indexOf<span style="color:#000;font-weight:bold">(</span>obj<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">-</span>1<span style="color:#000;font-weight:bold">;</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+ 	<span style="color:#000;font-weight:bold">public</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Iterator</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">iterator</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">new</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Iterator</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 			<span style="color:#000;font-weight:bold">private</span> Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span>
+ 			
+ 			<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+ 			<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">hasNext</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 				<span style="color:#000;font-weight:bold">return</span> trav <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+
+ 			<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+ 			<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">next</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+ 				T data <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span><span style="color:#000;font-weight:bold">;</span>
+ 				trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span>
+ 				<span style="color:#000;font-weight:bold">return</span> data<span style="color:#000;font-weight:bold">;</span>
+ 			<span style="color:#000;font-weight:bold">}</span>
+ 		<span style="color:#000;font-weight:bold">}</span>
+ 	<span style="color:#000;font-weight:bold">}</span>
+
+ 	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">toString</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        StringBuilder sb <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> StringBuilder<span style="color:#000;font-weight:bold">();</span>
+        sb<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;[ &#34;</span><span style="color:#000;font-weight:bold">);</span>
+        Node<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> trav <span style="color:#000;font-weight:bold">=</span> head<span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>trav <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+            sb<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span>trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">data</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34; &#34;</span><span style="color:#000;font-weight:bold">);</span>
+            trav <span style="color:#000;font-weight:bold">=</span> trav<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">next</span><span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">}</span>
+        sb<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;]&#34;</span><span style="color:#000;font-weight:bold">);</span>
+        <span style="color:#000;font-weight:bold">return</span> sb<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">toString</span><span style="color:#000;font-weight:bold">();</span>
+    <span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>So this was doubly linked list implementation. Singly linked list is much more simpler because there is not need to manage previous references.</p>
+<h4 id="conclusion">Conclusion</h4>
+<p>Idea is to understand how to manage pointers of a linked list. Once you understand it, there should be no problem to implement the data structure.
+And remember:</p>
+<ol>
+<li>HEAD is the first element / object.</li>
+<li>TAIL is the last element / object.</li>
+</ol>
+</article><section class="article labels"><a class="tag" href=/tags/ds/>ds</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/ds/stack/"><span class="iconfont icon-article"></span>Stack</a></p><p><a class="link" href="/ds/dynamic-array/"><span class="iconfont icon-article"></span>Dynamic Array</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Queue&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Queue" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">DS</a><a class="nav item" href="/oop">OOP</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Queue</h1><p class="article date">2021-05-27</p></section><article class="article markdown-body"><h4 id="what-is-queue">What is Queue?</h4>
+<p>A queue is a linear data structure which models real world queues by having two primary operations:</p>
+<ul>
+<li>enqueue - getting into the queue, e.g step into the queue. Enqueue = Adding = Offering</li>
+<li>dequeue - leaving the queue. Dequeue = Polling = Removing from the front.</li>
+</ul>
+<pre><code>Instruction:
+1. Enqueue 12
+2. Dequeue 
+3. Dequeue
+4. Enqueue 7
+5. Dequeue 
+6. Enqueue 6
+
+Queue: 
+Front | 55 1 33 17 11 | Back
+
+1: 55 1 33 17 11 &lt;= 12
+2. 55 &lt;= 1 33 17 11 12
+3. 1 &lt;= 33 17 11 12
+4. 33 17 11 12 &lt;= 7
+5. 33 &lt;= 17 11 12 7
+6. 17 11 12 7 &lt;= 6
+
+Done: 17 11 12 7 6
+</code></pre><h4 id="where-is-queue-used">Where is queue used?</h4>
+<ul>
+<li>any waiting line is queue.</li>
+<li>can keep track of the most recent added elements.</li>
+<li>web server request management where you want first come first serve.</li>
+<li>breadth first search graph traversal.</li>
+</ul>
+<h4 id="complexity">Complexity</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enqueue</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Dequeue</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Peeking</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Contains</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Removal</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>isEmpty</td>
+<td>O(1)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Contains - we need to scan through all the elements.</li>
+<li>Removal - again, we have to go over all the elements.</li>
+<li>Everything else is kept in memory basically. That is, we know where those elements are.</li>
+</ul>
+<h4 id="queue-implementation">Queue implementation</h4>
+<p>There are many ways to implement queue data structure.</p>
+<p>You can use static arrays, in which case you have to keep track of how large your array is. Or use dynamic array, which removes that problem.</p>
+<p>Then there are singly linked list and doubly linked list.
+In our case, we use doubly linked list.</p>
+<p>The main goal is to keep track of <em>head</em> and <em>tail</em>.
+Main idea is to keep the tail pointer on the last element and head pointer on the first element.</p>
+<p>And remember, <em>nulls</em> are removed by garbage collector.</p>
+<h4 id="code">Code</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Queue</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">implements</span> Iterable<span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">private</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LinkedList</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> list <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LinkedList</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;();</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Queue</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Queue</span><span style="color:#000;font-weight:bold">(</span>T firstElement<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		offer<span style="color:#000;font-weight:bold">(</span>firstElement<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">size</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isEmpty</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">==</span> 0<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">peek</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Queue is empty&#34;</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">peekFirst</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">// remove first
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">poll</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Queue is empty&#34;</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">removeFirst</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">// add last
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">offer</span><span style="color:#000;font-weight:bold">(</span>T elem<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">addLast</span><span style="color:#000;font-weight:bold">(</span>elem<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+	<span style="color:#000;font-weight:bold">public</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">util</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Iterator</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">iterator</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> list<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">iterator</span><span style="color:#000;font-weight:bold">();</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h4 id="queue-implementation-using-static-array">Queue implementation using static array.</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ArrayQueue</span><span style="color:#000;font-weight:bold">&lt;</span>T<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">private</span> Object<span style="color:#000;font-weight:bold">[]</span> data<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> head<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> tail<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">ArrayQueue</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> capacity<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		data <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Object<span style="color:#000;font-weight:bold">[</span>capacity <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">];</span>
+		head <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+		tail <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isEmpty</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> head <span style="color:#000;font-weight:bold">==</span> tail<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isFull</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">(</span>head <span style="color:#000;font-weight:bold">+</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span> <span style="color:#000;font-weight:bold">-</span> tail<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">%</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span> <span style="color:#000;font-weight:bold">==</span> 1<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">offer</span><span style="color:#000;font-weight:bold">(</span>T elem<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isFull<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Queue is full&#34;</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		data<span style="color:#000;font-weight:bold">[</span>tail<span style="color:#000;font-weight:bold">++]</span> <span style="color:#000;font-weight:bold">=</span> elem<span style="color:#000;font-weight:bold">;</span>
+		tail <span style="color:#000;font-weight:bold">=</span> adjustIndex<span style="color:#000;font-weight:bold">(</span>tail<span style="color:#000;font-weight:bold">,</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">poll</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Queue is empty&#34;</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		head <span style="color:#000;font-weight:bold">=</span> adjustIndex<span style="color:#000;font-weight:bold">(</span>head<span style="color:#000;font-weight:bold">,</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">(</span>T<span style="color:#000;font-weight:bold">)</span> data<span style="color:#000;font-weight:bold">[</span>head<span style="color:#000;font-weight:bold">++];</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> T <span style="color:#900;font-weight:bold">peek</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>isEmpty<span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> RuntimeException<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Queue is empty&#34;</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">}</span>
+
+		head <span style="color:#000;font-weight:bold">=</span> adjustIndex<span style="color:#000;font-weight:bold">(</span>head<span style="color:#000;font-weight:bold">,</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">);</span>
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">(</span>T<span style="color:#000;font-weight:bold">)</span> data<span style="color:#000;font-weight:bold">[</span>head<span style="color:#000;font-weight:bold">];</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> adjustIndex<span style="color:#000;font-weight:bold">(</span>tail <span style="color:#000;font-weight:bold">+</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span> <span style="color:#000;font-weight:bold">-</span> head<span style="color:#000;font-weight:bold">,</span> data<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">adjustIndex</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> index<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> size<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> index <span style="color:#000;font-weight:bold">&gt;=</span> size <span style="color:#000;font-weight:bold">?</span> index <span style="color:#000;font-weight:bold">-</span> size <span style="color:#000;font-weight:bold">:</span> index<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">}</span>
+
+
+</code></pre></div><h4 id="conclusion">Conclusion</h4>
+<p>As we can see, it is a lot easier to implement Queue while using LinkedList. We need to keep in mind where do we take the element - front or back - and that is basically it.</p>
+</article><section class="article labels"><a class="tag" href=/tags/ds/>ds</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/ds/stack/"><span class="iconfont icon-article"></span>Stack</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

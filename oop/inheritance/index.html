@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Inheritance&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Inheritance" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">DS</a><a class="nav item" href="/oop">OOP</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Inheritance</h1><p class="article date">2021-03-26</p></section><article class="article markdown-body"><p>The idea behind inheritance is that you can create new classes that are built on top
+of existing classes. It means that you use already existing classes while adding
+new object specific information.</p>
+<ul>
+<li>Idea is to divide into objects.</li>
+<li>Has Access Modifiers - public, private, protected</li>
+<li>Objects can move and communicate with each other through member functions</li>
+<li>Supports overloading</li>
+</ul>
+<p>Represents the IS-A relationshop which is also knows as a parent-child relationship.
+Also known as generalization.</p>
+<h4 id="without-inheritance">Without inheritance</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Tv</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">private</span> Long id<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String name<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Double price<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Integer screenSize<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Integer refreshRage<span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Mobile</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">private</span> Long id<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String name<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Double price<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String operatingSystem<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String company<span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Now we are in trouble if we want to add more attributes that are common.
+Everything will get messy if we have more than, lets say, 5 object with some similar, some different attributes.
+E.g tv has manufacturer, left in stock. Mobile has type, extra gear&hellip;</p>
+<p>But as we can see they all have common things, like price, name, etc.</p>
+<p>How to fix it? Inheritance</p>
+<h4 id="with-the-inheritance">With the inheritance</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Product</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">private</span> Long id<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> String name<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">private</span> Double price<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#998;font-style:italic">// constructor
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Product</span><span style="color:#000;font-weight:bold">(</span>String name<span style="color:#000;font-weight:bold">,</span> Double price<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">name</span> <span style="color:#000;font-weight:bold">=</span> name<span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">price</span> <span style="color:#000;font-weight:bold">=</span> price<span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">// getters and setters + toString
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TV</span> <span style="color:#000;font-weight:bold">extends</span> Product
+	
+	<span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">final</span> Integer refreshRate<span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">final</span> Integer screenSize<span style="color:#000;font-weight:bold">;</span>
+
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">LedTV</span><span style="color:#000;font-weight:bold">(</span>String name<span style="color:#000;font-weight:bold">,</span> Double price<span style="color:#000;font-weight:bold">,</span> Integer refreshRate<span style="color:#000;font-weight:bold">,</span> Integer screenSize<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000;font-weight:bold">super</span><span style="color:#000;font-weight:bold">(</span>name<span style="color:#000;font-weight:bold">,</span> price<span style="color:#000;font-weight:bold">);</span>
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">refreshRate</span> <span style="color:#000;font-weight:bold">=</span> refreshRate<span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">screenSize</span> <span style="color:#000;font-weight:bold">=</span> screenSize<span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#000;font-weight:bold">}</span>
+
+    <span style="color:#998;font-style:italic">// getters and setters + toString for printing out 
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Mobile</span> <span style="color:#000;font-weight:bold">extends</span> Product <span style="color:#000;font-weight:bold">{</span>
+
+    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">final</span> String operatingSystem<span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">final</span> String company<span style="color:#000;font-weight:bold">;</span>
+
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Mobile</span><span style="color:#000;font-weight:bold">(</span>String name<span style="color:#000;font-weight:bold">,</span> Double price<span style="color:#000;font-weight:bold">,</span> String operatingSystem<span style="color:#000;font-weight:bold">,</span> String company<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000;font-weight:bold">super</span><span style="color:#000;font-weight:bold">(</span>name<span style="color:#000;font-weight:bold">,</span> price<span style="color:#000;font-weight:bold">);</span>
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">operatingSystem</span> <span style="color:#000;font-weight:bold">=</span> operatingSystem<span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">company</span> <span style="color:#000;font-weight:bold">=</span> company<span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#000;font-weight:bold">}</span>
+
+    <span style="color:#998;font-style:italic">// getters and setters + toString for printing out 
+</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Inheritance</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		Product product <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Product<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;product A&#34;</span><span style="color:#000;font-weight:bold">,</span> 10<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">99</span><span style="color:#000;font-weight:bold">);</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>product<span style="color:#000;font-weight:bold">);</span>
+
+        Product mobile <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Mobile<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;iPhone&#34;</span><span style="color:#000;font-weight:bold">,</span> 899<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">99</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;iOS&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#d14">&#34;Apple&#34;</span><span style="color:#000;font-weight:bold">);</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>mobile<span style="color:#000;font-weight:bold">);</span>
+
+        Product tv <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> LedTV<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Ultra HD TV&#34;</span><span style="color:#000;font-weight:bold">,</span> 1099<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">99</span><span style="color:#000;font-weight:bold">,</span> 50<span style="color:#000;font-weight:bold">,</span> 58<span style="color:#000;font-weight:bold">);</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>tv<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Output:</p>
+<pre><code>Product{name='product A', price=10.99}
+Mobile{name='iPhone', price=899.99, operatingSystem='iOS', company='Apple'}
+LedTV{name='Ultra HD TV', price=1099.99, refreshRate=50, screenSize=58}
+</code></pre><h4 id="overloading-and-overriding">Overloading and Overriding</h4>
+<p>When talking about inheritance then there will come up two words that might confuse in the beginning - overloading and overriding.</p>
+<p><code>Overloading</code> - same method name but with different parameters and return type. E.g <code>System.out.println()</code> has most of the time different parameters.</p>
+<p><code>Overriding</code> - Subclass has the same method as in parent class, but acts differently.
+Usually nice to say with <code>@Override</code> annotation.</p>
+<p>For example:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Product</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#998;font-style:italic">// same parameters as before
+</span><span style="color:#998;font-style:italic"></span>
+	<span style="color:#000;font-weight:bold">public</span> Integer <span style="color:#900;font-weight:bold">calculatePrice</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// calculates the price of current product
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Mobile</span> <span style="color:#000;font-weight:bold">extends</span> Product <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#998;font-style:italic">// same parameters as before
+</span><span style="color:#998;font-style:italic"></span>
+	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+	<span style="color:#000;font-weight:bold">public</span> Integer <span style="color:#900;font-weight:bold">calculatePrice</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// calculates the price of current mobile
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#998;font-style:italic">// Overloading
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">calcualte</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// magic #1
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+	<span style="color:#000;font-weight:bold">public</span> Double <span style="color:#900;font-weight:bold">calcualte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">double</span> x<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">double</span> y<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// magic #2
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+	<span style="color:#000;font-weight:bold">public</span> Integer <span style="color:#900;font-weight:bold">calcualte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> a<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> b<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// magic #3
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h4 id="difference-between-overloading-and-overriding">Difference between Overloading and Overriding</h4>
+<table>
+<thead>
+<tr>
+<th>Overloading</th>
+<th>Overriding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Happens inside one class</td>
+<td>Occurs in super class and sub class. I.e inheritance is involved</td>
+</tr>
+<tr>
+<td>Name of the method is the same but parameters are different</td>
+<td>Name and parameters both are the same</td>
+</tr>
+<tr>
+<td>Increases readability</td>
+<td>Using the same method in child class which is already presented in parent class.</td>
+</tr>
+<tr>
+<td>Return type can be same or different</td>
+<td>Return type is always the same</td>
+</tr>
+<tr>
+<td>Compile time polymorphism</td>
+<td>Run time polymorphism</td>
+</tr>
+</tbody>
+</table>
+<h4 id="why-use-method-overloading">Why use method overloading?</h4>
+<p>Overloading makes code cleaner and easier to read.
+Overloading the method - for example <code>calculate()</code> method above - lets you use the the same method with the same name
+while only changing the parameters. Imagine having <code>calculate()</code> method but with different name for each data type&hellip;</p>
+<p>Keep in mind that it is impossible to have method with same name and with same paramters. Compiler will tell you that.
+Simply changing the return type of two methods with same names will not result in overloading. Again, compiler will tell you that.</p>
+<h4 id="why-use-method-overriding">Why use method overriding?</h4>
+<p>It has two main concepts:</p>
+<ol>
+<li>it is used to provide specific implementation of a method which is already defined in parent class.</li>
+<li>it is used for runtime polymorphism. (more about it later)</li>
+</ol>
+<p>Rules to override:</p>
+<ol>
+<li>name and return type must be the same.</li>
+<li>also the signature of the method should be the same</li>
+<li>method can only be overridden in sub class, not in the same class (like overloading).</li>
+<li>overriding method cannot throw checked Exception than checked exception thrown by overridden method.
+E.g If method in parent class throws <code>IOException</code> or <code>ClassNotFoundException</code> then the same method in subclass cannot throw casual <code>Exception</code> because last one is higher in hierarchy.</li>
+<li>Overriding method cannot reduce access. It means that if overridden method is defined public, then overriding method cannot be protected or private. BUT it can be other way around - overridden method can be protected and overriding method can be public.</li>
+<li><code>private</code>, <code>static</code> and <code>final</code> methods cannot be overriden in Java.</li>
+</ol>
+<p>You can prevent overriding by using <code>final</code> keyword.</p>
+<h3 id="advantages-of-using-inheritance">Advantages of using inheritance:</h3>
+<ol>
+<li>code reusability</li>
+<li>extensibility</li>
+<li>overriding</li>
+<li>data hiding</li>
+</ol>
+<p>Types of inheritance in Java</p>
+<ol>
+<li>
+<p>single level</p>
+<ul>
+<li>one parent one child relatsionship</li>
+</ul>
+</li>
+<li>
+<p>multilevel</p>
+<ul>
+<li>parent to child to child (e.g):</li>
+</ul>
+<p><code>class A &lt;- class B extends A &lt;- class C extends B</code></p>
+</li>
+<li>
+<p>hierarchical</p>
+<ul>
+<li>one parent with more than one children</li>
+</ul>
+</li>
+</ol>
+<h3 id="why-multiple-inheritance-is-not-suppoert-in-java">Why multiple inheritance is not suppoert in java?</h3>
+<p>Consider a case where A, B and C are three classes.
+The class C inherits A and B classes.
+If A and B classes have the same method and you call it from child class, there will be uncertainty which method to call - from A or from B class?</p>
+<p>Since compile-time errors are better than runtime errors, Java renders compile-time error if you inherit 2 classes.
+So wheter you have same method or different, there will be compile time error.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">A</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">printMessage</span><span style="color:#000;font-weight:bold">(){</span>
+		System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;A&#34;</span><span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">B</span> <span style="color:#000;font-weight:bold">{</span>
+
+	pulbic <span style="color:#900;font-weight:bold">printMessage</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;B&#34;</span><span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">C</span> <span style="color:#000;font-weight:bold">extends</span> A<span style="color:#000;font-weight:bold">,</span> B <span style="color:#000;font-weight:bold">{</span>   <span style="color:#998;font-style:italic">// suppose it is possible
+</span><span style="color:#998;font-style:italic"></span>
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		C obj <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> C<span style="color:#000;font-weight:bold">();</span>
+		obj<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">printMessage</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#998;font-style:italic">// which message will be invoked?
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+</code></pre></div></article><section class="article labels"><a class="tag" href=/tags/oop/>oop</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/oop/encapsulation/"><span class="iconfont icon-article"></span>Encapsulation</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

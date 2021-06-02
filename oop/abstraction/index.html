@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Abstraction&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Abstraction" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">DS</a><a class="nav item" href="/oop">OOP</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Abstraction</h1><p class="article date">2021-04-01</p></section><article class="article markdown-body"><p><!-- raw HTML omitted -->Abstraction<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted --> is the concept of object oriented programming that &ldquo;shows&rdquo; only essential attributes and &ldquo;hides&rdquo; unnecessary information.</p>
+<p>Thus, the main purpose of abstraction is hiding the unnecessary details from the users.
+It helps to reduce programming complexity and efforts.</p>
+<h4 id="example">Example</h4>
+<p>List top 10 information variables (name, address, etc) of your customer to create a banking application.</p>
+<p>Here goes:</p>
+<ol>
+<li>name</li>
+<li>income</li>
+<li>tax information</li>
+<li>address</li>
+<li>&hellip;</li>
+<li>favorite food</li>
+<li>favorite movie</li>
+</ol>
+<p>What the hell?!</p>
+<p>Well.. the amount of information is quite infinite. We only need the relevant ones.
+In essence - we are selecting relevant data from the larger pool.
+But the same set of data can be used in other places, for example in Banking application, Eployee, Hospital and Government databases, etc.</p>
+<p>Since we have fetched the customer information from a larger pool, the process is referred as Abstraction in OOP.</p>
+<h3 id="advantages-of-abstraction">Advantages of Abstraction</h3>
+<ul>
+<li>It allows you to group several related classes as siblings</li>
+<li>Helps to reduce the complexity of the design and implementation process</li>
+<li>Avoids code duplications.</li>
+</ul>
+<h3 id="when-to-use-abstract-methods-and-classes">When to use Abstract methods and classes?</h3>
+<p>Abstract methods are mostly declared where two or more subclasses are also doing the same thing in different ways through different implementations. It also extends the same Abstract class and offers different implementations of the abstract methods.</p>
+<p>Abstract classes help to describe generic types of behaviors and OOP class hierarchy. It also describes subclasses to offer implementation details of the abstract class.</p>
+<p>Also, there are situations in which we will want to define a superclass or parent class that declares the structure of a given abstraction without providing a complete implementation of every method.
+That means, sometimes we want to create a (super)class that only defines a generalization form that will be shared by all of its subclasses, leaving it to each sublcass to fill in the details.</p>
+<h3 id="a-better-example">A better example</h3>
+<p>So how do we know when method or class is abstract enough?</p>
+<p><code>abstract</code> keyword helps us to declare that.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">abstract</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Motorbike</span> <span style="color:#000;font-weight:bold">{</span>
+
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Motorbike</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Bike has been created!&#34;</span><span style="color:#000;font-weight:bold">);</span>
+    <span style="color:#000;font-weight:bold">}</span>
+
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">run</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">};</span>
+
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">changeGear</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;changed gear&#34;</span><span style="color:#000;font-weight:bold">);</span>
+    <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Honda</span> <span style="color:#000;font-weight:bold">extends</span> Motorbike <span style="color:#000;font-weight:bold">{</span>
+
+    <span style="color:#3c5d5d;font-weight:bold">@Override</span>
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">run</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        System<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">out</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;Honda is running...&#34;</span><span style="color:#000;font-weight:bold">);</span>
+    <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Abstraction</span> <span style="color:#000;font-weight:bold">{</span>
+
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        Motorbike bike <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Honda<span style="color:#000;font-weight:bold">();</span> <span style="color:#998;font-style:italic">// bike has been created!
+</span><span style="color:#998;font-style:italic"></span>        bike<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">run</span><span style="color:#000;font-weight:bold">();</span>                   <span style="color:#998;font-style:italic">// from Honda class
+</span><span style="color:#998;font-style:italic"></span>        bike<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">changeGear</span><span style="color:#000;font-weight:bold">();</span>            <span style="color:#998;font-style:italic">// comes from abstract parent class
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+</code></pre></div><p>Output:</p>
+<pre><code>Bike has been created!
+Honda is running...
+changed gear
+</code></pre><p>Notice that <code>new Honda()</code> was created since it is subclass of Motorbike. And this must be done almost everywhere.
+<!-- raw HTML omitted -->See LSP <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup><!-- raw HTML omitted --></p>
+<h3 id="another-one">Another one</h3>
+<p>A bit advanced place where to use abstraction is in factory pattern. Factory pattern is most commonly used when you want to
+create object without exposing the creatin logic to the client and refer to newly created object using a common interface or abstract class.</p>
+<p>Imagine we want to set different type of prices for different customer behavioural action.
+Case is - what kind of price strategy we should use depending on user action?
+Factory patterns comes to rescue us and solves it in runtime.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">abstract</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">BasePrice</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">abstract</span> Price <span style="color:#900;font-weight:bold">processPrice</span><span style="color:#000;font-weight:bold">(</span>Price price<span style="color:#000;font-weight:bold">);</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> Price <span style="color:#900;font-weight:bold">process</span><span style="color:#000;font-weight:bold">(</span>Price price<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">//logic how to price processing goes. 
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">PriceFactory</span> <span style="color:#000;font-weight:bold">{</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> BasePrice <span style="color:#900;font-weight:bold">create</span><span style="color:#000;font-weight:bold">(</span>UserAction action<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		BasePrice priceStrategy<span style="color:#000;font-weight:bold">;</span>
+		<span style="color:#000;font-weight:bold">switch</span> <span style="color:#000;font-weight:bold">(</span>action<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#000;font-weight:bold">case</span> X<span style="color:#000;font-weight:bold">:</span>
+				priceStrategy <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> SuspendedPrice<span style="color:#000;font-weight:bold">();</span>
+				<span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">case</span> Y<span style="color:#000;font-weight:bold">:</span> 	
+				priceStrategy <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> TerminatePrice<span style="color:#000;font-weight:bold">();</span>
+				<span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
+			<span style="color:#000;font-weight:bold">default</span><span style="color:#000;font-weight:bold">:</span>
+				priceStrategy <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> DefaultPrice<span style="color:#000;font-weight:bold">();</span>
+		<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">return</span> priceStrategy<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+	
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">SuspendedPrice</span> <span style="color:#000;font-weight:bold">extends</span> BasePrice <span style="color:#000;font-weight:bold">{</span> 
+	
+	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+	<span style="color:#000;font-weight:bold">public</span> Price <span style="color:#900;font-weight:bold">processPrice</span><span style="color:#000;font-weight:bold">(</span>Price price<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// logic goes here
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TerminatePrice</span> <span style="color:#000;font-weight:bold">extends</span> BasePrice <span style="color:#000;font-weight:bold">{</span>
+	
+	<span style="color:#3c5d5d;font-weight:bold">@Override</span>
+	<span style="color:#000;font-weight:bold">public</span> Price <span style="color:#900;font-weight:bold">processPrice</span><span style="color:#000;font-weight:bold">(</span>Price price<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#998;font-style:italic">// logic goes here
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h3 id="difference-between-abstract-class-and-encapsulation">Difference between Abstract class and Encapsulation</h3>
+<p>When you have read and studied about encapsulation, you will have some questions, like aren&rsquo;t they doing the same thing but in different way?</p>
+<p>Let us see the differences:</p>
+<table>
+<thead>
+<tr>
+<th>Abstraction</th>
+<th>Encapsulation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Solves the issues at design level</td>
+<td>Solves issues at implementation level</td>
+</tr>
+<tr>
+<td>Hiding unwanted details while showing most essential ones</td>
+<td>Means binding the code and data into single unit</td>
+</tr>
+<tr>
+<td>Data abstraction allows focussing on what the information object must contain</td>
+<td>Encapsulation means hiding the internal details of how an object does someting for security reasons.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rules-of-abstract-class">Rules of abstract class</h3>
+<ol>
+<li>Class is declared with <code>abstract</code> keyword</li>
+<li>It cannot be instantiated. Will get Compile time exception</li>
+<li>Can have abstract and non-abstract methods</li>
+<li>Can have constructor and static methods</li>
+<li>Can have final methods</li>
+</ol>
+<p><strong>Question.</strong></p>
+<p>Now, you might think - why do we need constructor when we can&rsquo;t instantiate object?</p>
+<p><strong>Answer</strong>.</p>
+<p>First and foremost - constructor does not create the object. Constructor does what we want constructor to do, like initialising fields.
+Secondly, imagine if you have two different subclasses of your abstract class. When you instantiate them, their constructor will be called and the parent constructor will be called (first) and the fields will be initialized.
+If you don&rsquo;t do anything, the default constructor will be called. You can use super keyword to invoke specific constructor on the parent class.</p>
+<p>Consider this:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">abstract</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Product</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#458;font-weight:bold">int</span> multiplyBy<span style="color:#000;font-weight:bold">;</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">Product</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> multiplyBy<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">multiplyBy</span> <span style="color:#000;font-weight:bold">=</span> multiplyBy<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">multiply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> val<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">return</span> multiplyBy <span style="color:#000;font-weight:bold">*</span> val<span style="color:#000;font-weight:bold">;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TimesTwo</span> <span style="color:#000;font-weight:bold">extends</span> Product <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">TimesTwo</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">super</span><span style="color:#000;font-weight:bold">(</span>2<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TimesWhat</span> <span style="color:#000;font-weight:bold">extends</span> Product <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">TimesWhat</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> what<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#000;font-weight:bold">super</span><span style="color:#000;font-weight:bold">(</span>what<span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+</code></pre></div><p>Abstract constructors will frequently be used to enforce class constraints or invariants such as the minimum fields required to setup the class.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://www.yegor256.com/2014/06/09/objects-should-be-immutable.html"target="_blank" rel="noopener noreferrer">Abstraction</a>
+ <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle"target="_blank" rel="noopener noreferrer">Liskov Substitution Principle</a>
+ <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</article><section class="article labels"><a class="tag" href=/tags/oop/>oop</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/oop/polymorphism/"><span class="iconfont icon-article"></span>Polymorphism</a></p><p><a class="link" href="/oop/encapsulation/"><span class="iconfont icon-article"></span>Encapsulation</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">The simple engineer blog</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

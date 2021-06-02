@@ -10,6 +10,763 @@
     
     
     <item>
+      <title>Queue</title>
+      <link>https://tjoosep.github.io/ds/queue/</link>
+      <pubDate>Thu, 27 May 2021 16:25:32 +0300</pubDate>
+      
+      <guid>https://tjoosep.github.io/ds/queue/</guid>
+      <description>&lt;h4 id=&#34;what-is-queue&#34;&gt;What is Queue?&lt;/h4&gt;
+&lt;p&gt;A queue is a linear data structure which models real world queues by having two primary operations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;enqueue - getting into the queue, e.g step into the queue. Enqueue = Adding = Offering&lt;/li&gt;
+&lt;li&gt;dequeue - leaving the queue. Dequeue = Polling = Removing from the front.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;Instruction:
+1. Enqueue 12
+2. Dequeue 
+3. Dequeue
+4. Enqueue 7
+5. Dequeue 
+6. Enqueue 6
+
+Queue: 
+Front | 55 1 33 17 11 | Back
+
+1: 55 1 33 17 11 &amp;lt;= 12
+2. 55 &amp;lt;= 1 33 17 11 12
+3. 1 &amp;lt;= 33 17 11 12
+4. 33 17 11 12 &amp;lt;= 7
+5. 33 &amp;lt;= 17 11 12 7
+6. 17 11 12 7 &amp;lt;= 6
+
+Done: 17 11 12 7 6
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;where-is-queue-used&#34;&gt;Where is queue used?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;any waiting line is queue.&lt;/li&gt;
+&lt;li&gt;can keep track of the most recent added elements.&lt;/li&gt;
+&lt;li&gt;web server request management where you want first come first serve.&lt;/li&gt;
+&lt;li&gt;breadth first search graph traversal.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complexity&#34;&gt;Complexity&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Enqueue&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dequeue&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Peeking&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Contains&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Removal&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;isEmpty&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Contains - we need to scan through all the elements.&lt;/li&gt;
+&lt;li&gt;Removal - again, we have to go over all the elements.&lt;/li&gt;
+&lt;li&gt;Everything else is kept in memory basically. That is, we know where those elements are.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;queue-implementation&#34;&gt;Queue implementation&lt;/h4&gt;
+&lt;p&gt;There are many ways to implement queue data structure.&lt;/p&gt;
+&lt;p&gt;You can use static arrays, in which case you have to keep track of how large your array is. Or use dynamic array, which removes that problem.&lt;/p&gt;
+&lt;p&gt;Then there are singly linked list and doubly linked list.
+In our case, we use doubly linked list.&lt;/p&gt;
+&lt;p&gt;The main goal is to keep track of &lt;em&gt;head&lt;/em&gt; and &lt;em&gt;tail&lt;/em&gt;.
+Main idea is to keep the tail pointer on the last element and head pointer on the first element.&lt;/p&gt;
+&lt;p&gt;And remember, &lt;em&gt;nulls&lt;/em&gt; are removed by garbage collector.&lt;/p&gt;
+&lt;h4 id=&#34;code&#34;&gt;Code&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Queue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Iterable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;LinkedList&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; list &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;LinkedList&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;();&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Queue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Queue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T firstElement&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		offer&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;firstElement&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;peek&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Queue is empty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;peekFirst&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// remove first
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;poll&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Queue is empty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;removeFirst&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// add last
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;offer&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;addLast&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;Iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;queue-implementation-using-static-array&#34;&gt;Queue implementation using static array.&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;ArrayQueue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;ArrayQueue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; capacity&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		data &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Object&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;capacity &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+		head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isFull&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;%&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;offer&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isFull&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Queue is full&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; adjustIndex&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;poll&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Queue is empty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; adjustIndex&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++];&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;peek&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Queue is empty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; adjustIndex&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; adjustIndex&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;adjustIndex&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; size &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;?&lt;/span&gt; index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; size &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h4&gt;
+&lt;p&gt;As we can see, it is a lot easier to implement Queue while using LinkedList. We need to keep in mind where do we take the element - front or back - and that is basically it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Stack</title>
+      <link>https://tjoosep.github.io/ds/stack/</link>
+      <pubDate>Thu, 27 May 2021 00:26:03 +0300</pubDate>
+      
+      <guid>https://tjoosep.github.io/ds/stack/</guid>
+      <description>&lt;h4 id=&#34;what-is-stack&#34;&gt;What is Stack?&lt;/h4&gt;
+&lt;p&gt;A stack is one-ended linear data structure which models a real world stack by having two primary operations - push and pop.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;push =&amp;gt; add top of the data pile.&lt;/li&gt;
+&lt;li&gt;pop  =&amp;gt; take from the top of data pile.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Everything happens on the top.&lt;/p&gt;
+&lt;h4 id=&#34;where-is-stack-used&#34;&gt;Where is stack used?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;used by undo command.&lt;/li&gt;
+&lt;li&gt;used in compilers - e.g checking for matching brackets and braces.&lt;/li&gt;
+&lt;li&gt;used in recursion.&lt;/li&gt;
+&lt;li&gt;can be used to do a depth first search (DFS).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complexity-analysis&#34;&gt;Complexity Analysis&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Time Complexity&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;pushing&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;popping&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;peeking&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;searching&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;size&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Nothing much to comment here.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pushing, popping, peeking and size are pointers to specific element, thus O(1).&lt;/li&gt;
+&lt;li&gt;To search element, we need to go through whole stack, thus O(n).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;bracket-example&#34;&gt;Bracket example&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;let S be a stack
+
+for bracket in brackets:
+	reversed_bracket = getReversedBracket(bracket)
+	if isLeftBracket(bracket): 
+		S.push(bracket)
+	else if S.isEmpty() or S.pop() != reversed_bracket:
+		return false; // invalid
+
+return S.isEmpty()    // empty then good
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;implementation&#34;&gt;Implementation&lt;/h4&gt;
+&lt;p&gt;Instructions&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;push(4)
+push(2)
+push(5)
+push(13)
+
+null
+push(4): 4 -&amp;gt; null
+push(2): 2 -&amp;gt; 4 -&amp;gt; null
+push(5): 5 -&amp;gt; 2 -&amp;gt; 4 -&amp;gt; null
+push(13): 13 -&amp;gt; 5 -&amp;gt; 2 -&amp;gt; 4 -&amp;gt; null
+
+Head is pointing always to the top element.
+
+popping is reverse method to the popping while handling memory
+&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Stack&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Iterable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// or use the self created linked list
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;LinkedList&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; list &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;LinkedList&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;();&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// empty stack
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Stack&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// create stack with initial element
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Stack&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		push&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// nr of elements in stack
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;addLast&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;elem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; EmptyStackException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;removeLast&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;peek&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; EmptyStackException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;peekLast&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;Iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h4&gt;
+&lt;p&gt;If you understand how linkedlist works, then stack is quite easy to implement.
+Internally you will use list where you take out elements. In list, each element will be at the end of the list.
+In stack, popping and pushing will manage first element.&lt;/p&gt;
+&lt;p&gt;So taking out last element from linked list is equal to taking out first element of stack. If that made sense.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linked List</title>
+      <link>https://tjoosep.github.io/ds/linked-list/</link>
+      <pubDate>Tue, 25 May 2021 14:46:54 +0300</pubDate>
+      
+      <guid>https://tjoosep.github.io/ds/linked-list/</guid>
+      <description>&lt;p&gt;The next chapter after dynamic arrays would be linked list.&lt;/p&gt;
+&lt;h4 id=&#34;what-is-linked-list&#34;&gt;What is linked list?&lt;/h4&gt;
+&lt;p&gt;Linked list is a sequential list of nodes that hold data which point to other nodes containing also some data.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;( data ) ==&amp;gt; ( data ) ==&amp;gt; ( data ) ==&amp;gt; null. 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Each node has pointer to the next data, while last node is null.&lt;/p&gt;
+&lt;h4 id=&#34;where-are-linked-lists-used&#34;&gt;Where are linked lists used?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;used in list, stack and queues.&lt;/li&gt;
+&lt;li&gt;greate for creating circular lists.&lt;/li&gt;
+&lt;li&gt;can easily model real world objects, like trains.&lt;/li&gt;
+&lt;li&gt;often used in adjacency lists for graphs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;terminology&#34;&gt;Terminology&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HEAD: first element of the list
+TAIL: last element of the list
+Pointer: reference to the next element
+Node: object that contains pointer and data
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;sinly-and-doubly-linked-lists&#34;&gt;Sinly and Doubly linked lists&lt;/h4&gt;
+&lt;p&gt;There are two types of linked lists: doubly linked list and sinly linked list&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Doubly linked list holds data, pointer to the next AND pointer to the previous object.&lt;/li&gt;
+&lt;li&gt;Singly linked list hold data and pointer to the next object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So the obvious advantage of doubly linked list is that it can be traversed backwards but it takes 2x more memory,
+while singly linked list uses less memory and it is easier to implement, but takes some effort to get previous element.&lt;/p&gt;
+&lt;h4 id=&#34;implementation-details---add-and-remove&#34;&gt;Implementation details - add and remove&lt;/h4&gt;
+&lt;p&gt;Add object into Singly linked list&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Insert 11 where the third node (7) is. 
+
+1. starting linked list: ( 5 ) =&amp;gt; ( 23 ) =&amp;gt; ( 7 ) =&amp;gt; ( 13 )
+2. travers to the correct position.
+3. create new object ( 11 ).
+4. place new object into correct position: 
+	( 5 ) =&amp;gt; ( 23 ) =&amp;gt; ( 7 ) =&amp;gt; ( 13 )
+					   ( 11 )
+5. set new objects pointer to the object that was there before. 
+( 11 ) =&amp;gt; ( 7 )
+6. set previous object pointer to point the new object.
+( 23 ) =&amp;gt; ( 11 )
+7. flat out the list
+( 5 ) =&amp;gt; ( 23 ) =&amp;gt; ( 11 ) =&amp;gt; ( 7 ) =&amp;gt; ( 13 )
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Add object into Doubly linked list&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Insert 11 where the third node (7) is.
+
+1. starting linked list: ( 5 ) &amp;lt;=&amp;gt; ( 23 ) &amp;lt;=&amp;gt; ( 7 ) &amp;lt;=&amp;gt; ( 13 )
+2. travers to the correct position.
+3. create new object ( 11 ).
+4. place new object into correct position: 
+	( 5 ) &amp;lt;=&amp;gt; ( 23 ) &amp;lt;=&amp;gt; ( 7 ) &amp;lt;=&amp;gt; ( 13 )
+					   ( 11 )
+5. set new objects pointer to the object that was there before 
+   AND this time point to the previous object as well. 
+ &amp;lt;= ( 11 ) &amp;lt;=&amp;gt; ( 7 )
+6. set previous object pointer to point the new object.
+( 23 ) =&amp;gt; ( 11 )
+7. flat out the list
+( 5 ) &amp;lt;=&amp;gt; ( 23 ) &amp;lt;=&amp;gt; (11) &amp;lt;=&amp;gt; ( 7 ) &amp;lt;=&amp;gt; ( 13 )
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Remove object from Singly linked list&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Remove 7 from the list.
+
+1. starting list: ( 5 ) =&amp;gt; ( 23 ) =&amp;gt; ( 11 ) =&amp;gt; ( 7 ) =&amp;gt; ( 13 )
+2. use 2 pointers - call them (F)irst and (S)econd - 
+   starting from the head and next to the head. 
+( 5 ) =&amp;gt; ( 23 ) =&amp;gt; ( 11 ) =&amp;gt; ( 7 ) =&amp;gt; ( 13 )
+  F        S
+3. traverse both pointers until second pointer finds removable element. 
+( 5 ) =&amp;gt; ( 23 ) =&amp;gt; ( 11 ) =&amp;gt; ( 7 ) =&amp;gt; ( 13 )
+                      F        S
+4. create temp variable that indicates removable object ( 7 ).
+5. move second pointer to the next object ( 13 ) 
+   (if there is, otherwise null).
+( 5 ) =&amp;gt; ( 23 ) =&amp;gt; ( 11 ) =&amp;gt; ( 7 ) =&amp;gt; ( 13 )
+                      F                 S
+6. point first pointer to the second pointers element. 
+7. remove temp variable and its pointer. 
+8. clean memory if needed. 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Remove object from Doubly linked list&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Remove 7 from the list.
+
+1. starting list: ( 5 ) &amp;lt;=&amp;gt; ( 23 ) &amp;lt;=&amp;gt; ( 11 ) &amp;lt;=&amp;gt; ( 7 ) &amp;lt;=&amp;gt; ( 13 )
+2. use 1 pointer starting form the head. 
+   we need one because doubly linked list objects 
+   have already pointers to next and previous objects. 
+3. traverse until we have found the removable object ( 7 ).
+4. make changes to removable object previous (11) and next object&#39;s pointers (13), 
+   so that they point to each other instead of removable object.
+5. remove removable object. 
+6. clean memory if needed
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The main takeaway is that we need to manage the pointers!&lt;/p&gt;
+&lt;h4 id=&#34;complexity&#34;&gt;Complexity&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Singly&lt;/th&gt;
+&lt;th&gt;Doubly&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Search&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Insert at head&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Insert at tail&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Remove at head&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Remove at tail&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Remove middle&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;searching is linear, because we have to traverse all the elements in the worst case.&lt;/li&gt;
+&lt;li&gt;insertion to the head and tail is constant because we have pointers to these objects, thus we know where they are.&lt;/li&gt;
+&lt;li&gt;remove at head is constant in both cases for the same reasons as before.&lt;/li&gt;
+&lt;li&gt;remove at tail is linear for sinly linked list because we do not know what is the object previous to the tail is thus we have to traverse the whole list.
+This does not apply to doubly linked list because we know the object previous to the last.&lt;/li&gt;
+&lt;li&gt;remove from the middle is linear because in the worst case we have to seek through n-1 objects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;implementation-of-doubly-linked-list&#34;&gt;Implementation of doubly linked list&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;DoublyLinkedList&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;implements&lt;/span&gt; Iterable &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; size &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// data representation class
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Node&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		T data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; next&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;	
+		Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; prev&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Node&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; previous&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; next&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; previous&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; next
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+		&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// return size == 0;
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/** 
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	 * Clear the linked list, O(n)
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	 * traverse whole list while setting everything to null
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;	**/&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;clear&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; traverser &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// start to traverse from the head.
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;traverser &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; next &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; traverser&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			traverser&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			traverser&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			traverser&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+			traverser &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; next&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; traverser &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+		size &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		addLast&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;addLast&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;(&lt;/span&gt;element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; newObject &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 			tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; newObject&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 			tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; newObject&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt; 	 * Add element to the first - head - position, O(1)
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt; 	**/&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;addFirst&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;T element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// previous and next pointers are null, cuz no element in list
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 			head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// new object refers to the current head, i.e new &amp;lt;=&amp;gt; old &amp;lt;=&amp;gt; ...
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;            Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; newObject &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;element&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// current head&amp;#39;s previous element refers to the new addable object	
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;            head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; newObject&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+            &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// head is the new object
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;            head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; newObject&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;peekFirst&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;The list is empty!&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;peekLast&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;The list is empty!&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Remove the first value at the head of the list, O(1)
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;removeFirst&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;The list is empty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// extract the data and move head pointer to the next node
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 		T data &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--;&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// if the list is now empty set the tail to null
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// return the removed data
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;removeLast&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;The list is empty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		T data &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;
+ 		tail &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--;&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;isEmpty&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			head &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// remove a node at a particular index, O(n)
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;removeAt&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; 0 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;||&lt;/span&gt; index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; IllegalArgumentException&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Invalid index&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// search from the front of the list
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; size &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt; 2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; size &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; tail&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; remove&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;remove&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// handle those cases where removable node is first or last
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; removeFirst&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; removeLast&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// refere correct nodes 
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 		node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+ 		T data &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// cleanup
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 		node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		node &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;prev&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+ 		size&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--;&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;remove&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Object obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				remove&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// search for the object
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt; 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 					remove&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+ 					&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;indexOf&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Object obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 		Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 					&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 					&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; index&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;contains&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Object obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; indexOf&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;Iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; java&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;util&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;Iterator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 			
+ 			&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;hasNext&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 			&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; T &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+ 				T data &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 				trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+ 			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+ 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+ 	&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        StringBuilder sb &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; StringBuilder&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+        sb&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;[ &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        Node&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; head&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            sb&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+            trav &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; trav&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+        sb&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;]&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; sb&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;So this was doubly linked list implementation. Singly linked list is much more simpler because there is not need to manage previous references.&lt;/p&gt;
+&lt;h4 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h4&gt;
+&lt;p&gt;Idea is to understand how to manage pointers of a linked list. Once you understand it, there should be no problem to implement the data structure.
+And remember:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;HEAD is the first element / object.&lt;/li&gt;
+&lt;li&gt;TAIL is the last element / object.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Dynamic Array</title>
       <link>https://tjoosep.github.io/ds/dynamic-array/</link>
       <pubDate>Mon, 24 May 2021 15:47:21 +0300</pubDate>
@@ -483,10 +1240,10 @@ DS make the difference betweento OK program and outstanding program.&lt;/p&gt;
     
     <item>
       <title>Polymorphism</title>
-      <link>https://tjoosep.github.io/posts/polymorphism/</link>
+      <link>https://tjoosep.github.io/oop/polymorphism/</link>
       <pubDate>Thu, 01 Apr 2021 16:08:10 +0300</pubDate>
       
-      <guid>https://tjoosep.github.io/posts/polymorphism/</guid>
+      <guid>https://tjoosep.github.io/oop/polymorphism/</guid>
       <description>&lt;p&gt;The word &amp;ldquo;Polymorphism&amp;rdquo; comes from two words - &amp;ldquo;poly&amp;rdquo; which means many and &amp;ldquo;morphs&amp;rdquo; which means forms.
 Polymorphism =&amp;gt; Many forms. It means it will allow us to perform a single acion in different ways.
 Think about it for a sec after the post. It all adds up.&lt;/p&gt;
@@ -664,10 +1421,10 @@ Meanwhile each class that implements &lt;code&gt;Document&lt;/code&gt; has like 
     
     <item>
       <title>Abstraction</title>
-      <link>https://tjoosep.github.io/posts/abstraction/</link>
+      <link>https://tjoosep.github.io/oop/abstraction/</link>
       <pubDate>Thu, 01 Apr 2021 16:06:31 +0300</pubDate>
       
-      <guid>https://tjoosep.github.io/posts/abstraction/</guid>
+      <guid>https://tjoosep.github.io/oop/abstraction/</guid>
       <description>&lt;p&gt;&lt;!-- raw HTML omitted --&gt;Abstraction&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;!-- raw HTML omitted --&gt; is the concept of object oriented programming that &amp;ldquo;shows&amp;rdquo; only essential attributes and &amp;ldquo;hides&amp;rdquo; unnecessary information.&lt;/p&gt;
 &lt;p&gt;Thus, the main purpose of abstraction is hiding the unnecessary details from the users.
 It helps to reduce programming complexity and efforts.&lt;/p&gt;
@@ -870,10 +1627,10 @@ If you don&amp;rsquo;t do anything, the default constructor will be called. You 
     
     <item>
       <title>Encapsulation</title>
-      <link>https://tjoosep.github.io/posts/encapsulation/</link>
+      <link>https://tjoosep.github.io/oop/encapsulation/</link>
       <pubDate>Thu, 01 Apr 2021 14:41:57 +0300</pubDate>
       
-      <guid>https://tjoosep.github.io/posts/encapsulation/</guid>
+      <guid>https://tjoosep.github.io/oop/encapsulation/</guid>
       <description>&lt;p&gt;In OOP languages, encapsulation refers to one of two notions, and sometimes to the combination thereof:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;mechanism for restricting direct access to some of the object&amp;rsquo;s (class) components.&lt;/li&gt;
@@ -1017,10 +1774,10 @@ problem. An object will never be left in broken state, cuz its state is modified
     
     <item>
       <title>Inheritance</title>
-      <link>https://tjoosep.github.io/posts/inheritance/</link>
+      <link>https://tjoosep.github.io/oop/inheritance/</link>
       <pubDate>Fri, 26 Mar 2021 14:15:50 +0200</pubDate>
       
-      <guid>https://tjoosep.github.io/posts/inheritance/</guid>
+      <guid>https://tjoosep.github.io/oop/inheritance/</guid>
       <description>&lt;p&gt;The idea behind inheritance is that you can create new classes that are built on top
 of existing classes. It means that you use already existing classes while adding
 new object specific information.&lt;/p&gt;
@@ -1255,141 +2012,6 @@ So wheter you have same method or different, there will be compile time error.&l
 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>What&#39;s This</title>
-      <link>https://tjoosep.github.io/posts/whats-this/</link>
-      <pubDate>Thu, 25 Mar 2021 21:51:48 +0200</pubDate>
-      
-      <guid>https://tjoosep.github.io/posts/whats-this/</guid>
-      <description>&lt;p&gt;When another blog is created, there are always questions like &amp;lsquo;why create another one, everybody is sharing nowadys?&amp;rsquo;&lt;/p&gt;
-&lt;p&gt;Here are my two cents.&lt;/p&gt;
-&lt;p&gt;Usually it goes like this - I make notes into my booklet or right on the paper. Then, when time passes I can&amp;rsquo;t find any of those pages aaand I need to read those subjects all over again.&lt;/p&gt;
-&lt;p&gt;With blog it is much easier - I can write everything down, most of the things are in one place and nicely categorized (thanks Hugo!).
-I just click on tag and similar topics will pop up. Or similar categories.&lt;/p&gt;
-&lt;h4 id=&#34;what-i-write-about&#34;&gt;What I write about?&lt;/h4&gt;
-&lt;p&gt;Things I am (re)learning again. Mostly CS related.&lt;/p&gt;
-&lt;p&gt;If you somehow happened to read my posts and want to comment / give feedback / correct me on something, feel free to contact via &lt;a href=&#34;mailto:tanel_joosep@hotmail.com&#34;&gt;email&lt;/a&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>About me</title>
-      <link>https://tjoosep.github.io/about/</link>
-      <pubDate>Sun, 21 Mar 2021 14:47:23 +0200</pubDate>
-      
-      <guid>https://tjoosep.github.io/about/</guid>
-      <description>&lt;h3 id=&#34;coming-soon&#34;&gt;Coming soon!&lt;/h3&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Getting Started</title>
-      <link>https://tjoosep.github.io/posts/getting-started/</link>
-      <pubDate>Sun, 21 Mar 2021 14:47:23 +0200</pubDate>
-      
-      <guid>https://tjoosep.github.io/posts/getting-started/</guid>
-      <description>&lt;p&gt;For my site I use &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Hugo&lt;/a&gt;
-. It is very simple and easy to set up the site, there are A LOT of themes and everything is easily configurable.&lt;/p&gt;
-&lt;h3 id=&#34;some-helpful-commands&#34;&gt;Some helpful commands&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Install hugo&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;brew install hugo&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;New site&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hugo new site mycoolsite&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;New post&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hugo new posts/post-name.md&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Building the code&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hugo server -t your-cool-theme-name&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;View the masterpiece&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hugo server&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&#34;to-organize-everything-i-use-2-separate-gihtub-sites&#34;&gt;To organize everything, I use 2 separate gihtub sites.&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;blog - hugo files and folders&lt;/li&gt;
-&lt;li&gt;my-git-account.github.io - published everything from blog repository.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;For that I have submoduled my blog with github pages.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; blog
-git submodule add -b main my-git-repo.github.io.git public
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This command adds submodule to main branch under public folder. Everything in that folder will be published to your github pages.&lt;/p&gt;
-&lt;p&gt;If everything looks good, you need to generate static files into public folder.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;hugo -t hugo-notepadium
-&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; public
-git add .
-git commit -m &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;msg&amp;#34;&lt;/span&gt;
-git push origin main
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Notice that my theme is called &lt;code&gt;hugo-notepadium&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;I have created a deployment script:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#!/bin/sh
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# if fail, deploy stops&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;set&lt;/span&gt; -e
-
-&lt;span style=&#34;color:#0086b3&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;\033[0;32mDeploying new stuff to github...\033[0m\n&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# build project&lt;/span&gt;
-hugo -t hugo-notepadium
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# go to /public&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;cd&lt;/span&gt; public
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# add everything to git&lt;/span&gt;
-git add .
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# commit&lt;/span&gt;
-&lt;span style=&#34;color:#008080&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;rebuilding site &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;$(&lt;/span&gt;date&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt; -n &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;$*&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;then&lt;/span&gt;
-	&lt;span style=&#34;color:#008080&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;$*&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-
-git commit -m &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;$msg&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# push and build&lt;/span&gt;
-git push origin main
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;to-add-tags-and-categories&#34;&gt;To add tags and categories&lt;/h3&gt;
-&lt;p&gt;Simply just add&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;tags: [&amp;quot;your-tag-name&amp;quot;]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;categories: [&amp;quot;your-category-name&amp;quot;]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;into header block.&lt;/p&gt;
-&lt;p&gt;And in your config.toml/.yml file make sure you have enabled both of these features (in my case):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[params.nav]
-showCategories = true
-showTags = true	
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;useful-links-and-sources&#34;&gt;Useful links and sources&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://gohugo.io/getting-started/configuration/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Hugo config&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://themes.gohugo.io/hugo-notepadium/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Notepadium theme&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=LIFvgrRxdt4&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Getting started with hugo and github pages&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://raw.githubusercontent.com/cntrump/hugo-notepadium/master/exampleSite/content/post/markdown-syntax.md&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Raw notepadium syntax highlights&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</description>
     </item>
     
   </channel>
