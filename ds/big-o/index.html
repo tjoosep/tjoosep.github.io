@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.81.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Big O&nbsp;&ndash;&nbsp;The simple engineer blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><title>Big O&nbsp;&ndash;&nbsp;Just blog</title><link rel="stylesheet" href="/css/core.min.3df786ad920955310ebbd8e15789a2ec2e652cbb07ab77a151b075edae94015e92a8517831afbb42ab33ad99744d7e34.css" integrity="sha384-PfeGrZIJVTEOu9jhV4mi7C5lLLsHq3ehUbB17a6UAV6SqFF4Ma&#43;7QqszrZl0TX40"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Big O" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">The simple engineer blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">DS</a><a class="nav item" href="/oop">OOP</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Just blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/posts">Posts</a><a class="nav item" href="/ds">Data structures</a><a class="nav item" href="/oop">OOP</a><a class="nav item" href="/solid">SOLID</a><a class="nav item" href="/algorithms">Algorithms</a><a class="nav item" href="/patterns">Design patterns</a><a class="nav item" href="/hash-table">Hash table</a><a class="nav item" href="/graphs">Graphs</a><a class="nav item" href="/trees">Trees</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
     <h1 class="article title">Big O</h1><p class="article date">2021-05-21</p></section><article class="article markdown-body"><h3 id="complexity-analysis">Complexity Analysis</h3>
 <p>As programmers, we often find ourselves asking the same 2 questions:</p>
 <ol>
@@ -75,9 +75,9 @@
 	<span style="color:#000;font-weight:bold">}</span>
 <span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><p>Why this is O(n^2)?</p>
-<p>It goes something like this:</p>
+<p>It goes like this:</p>
 <ul>
-<li>for the beginning, let&rsquo;s focus on the second loop.</li>
+<li>we need to figure our from inside out, because inner loops happen first. So let&rsquo;s focus on the second loop.</li>
 <li>since <em>i</em> goes from [0, n) the amount of looping done is directly determine by what <em>i</em> is.</li>
 <li>remark that if <em>i = 0</em>, we do <em>n</em> work, if <em>i=1</em>, we do <em>n-1</em> work, if <em>i = 2</em>, we do <em>n - 2</em> work, etc.</li>
 </ul>
@@ -100,15 +100,15 @@ while i &lt; 3 * n Do
 f(n) = 3n * (40 + n^3/2) = 3n / 40 + 3n^4/2 
 
 To break it down:
-* 3n ==&gt; outer while loop, which goes through 3*n
-* (40 + n^3/2) ==&gt; 40 comes from the first inner loop since 
-j = 10 and we go constant amount times (in this case 50), 
-and n^3 / 2 comes n*n*n and j is incremented 2 times each time. 
+1. 3n ==&gt; outer while loop, which goes through 3*n
+2. 40 + (n^3/2) ==&gt; 40 comes from the first inner loop since 
+   j = 10 and we go constant amount times (in this case 50), 
+   and n^3 / 2 comes n*n*n and j is incremented 2 times each time. 
 
 since inner while loops are 'inner', we need to multiply them.
 
 And to put it all together we get 
-3n / 40  + 3n^4 / 2
+3n / (40  + (3n^4 / 2)) =&gt; 3/2n * (n^3 + 80) =&gt; remove constants =&gt; n * n^3 =&gt; n^4
 
 which in big O notation becomes
 O(f(n)) = O(n^4)
@@ -128,7 +128,7 @@ O(f(n)) = O(n^4)
 </article><section class="article labels"><a class="tag" href=/tags/ds/>ds</a></section>
 </div>
 <div class="article bottom"><section class="article navigation"><p><a class="link" href="/ds/dynamic-array/"><span class="iconfont icon-article"></span>Dynamic Array</a></p><p><a class="link" href="/ds/intro-to-ds/"><span class="iconfont icon-article"></span>Introduction to data structures</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">The simple engineer blog</p>
+    <p class="copyright">Just blog</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
         target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>

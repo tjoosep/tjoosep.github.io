@@ -1,14 +1,290 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ds on The simple engineer blog</title>
+    <title>Ds on Just blog</title>
     <link>https://tjoosep.github.io/ds/</link>
-    <description>Recent content in Ds on The simple engineer blog</description>
+    <description>Recent content in Ds on Just blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 May 2021 16:25:32 +0300</lastBuildDate>
+    <lastBuildDate>Wed, 02 Jun 2021 15:54:03 +0300</lastBuildDate>
     
         <atom:link href="https://tjoosep.github.io/ds/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Binary Trees</title>
+      <link>https://tjoosep.github.io/ds/binary-trees/</link>
+      <pubDate>Wed, 02 Jun 2021 15:54:03 +0300</pubDate>
+      
+      <guid>https://tjoosep.github.io/ds/binary-trees/</guid>
+      <description>&lt;p&gt;One of my favourite data structure.&lt;/p&gt;
+&lt;h4 id=&#34;what-is-binary-search-tree&#34;&gt;What is [Binary (Search)] Tree?&lt;/h4&gt;
+&lt;p&gt;A &lt;em&gt;tree&lt;/em&gt; is an undirected graph which satisfies any of the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;an acyclic (i.e no cycles) connected graph&lt;/li&gt;
+&lt;li&gt;a connected graph with N nodes and N-1 edges.&lt;/li&gt;
+&lt;li&gt;an graph in which any two vertices are connected by exactly one path.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Root node =&amp;gt; top most node&lt;/p&gt;
+&lt;p&gt;If we have a rooted tree then we will want to have a reference to the root node of our tree.&lt;/p&gt;
+&lt;p&gt;Child node =&amp;gt; node that extends from another node.&lt;/p&gt;
+&lt;p&gt;Parent node =&amp;gt; is the inverse of child node.&lt;/p&gt;
+&lt;p&gt;Leaf node =&amp;gt; node without no children&lt;/p&gt;
+&lt;p&gt;Subtree is a tree entirely containt within another tree.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root	 				4 
+	   		  		  / | \
+parent of 7 and 2  	 0  3  9
+    	   		   / |
+child / leaf	  7  2
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;what-is-binary-tree&#34;&gt;What is Binary tree?&lt;/h4&gt;
+&lt;p&gt;A Binary Tree (BT) is a tree for which every node has &lt;em&gt;at most two child nodes&lt;/em&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;what-is-binary-search-tree-1&#34;&gt;What is Binary Search tree?&lt;/h4&gt;
+&lt;p&gt;A Binary Search Tree (BST) is a binary tree that satisfies the BST invariant:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;left subtree has smaller elements.&lt;/li&gt;
+&lt;li&gt;right subtree has larger elements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;Example of BST
+
+			8 
+		   / \
+		  6   9
+		 / \   \
+		2   7   11
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;when-and-where-to-use-it&#34;&gt;When and where to use it?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Syntax trees - used by compiler and calcualtors&lt;/li&gt;
+&lt;li&gt;Used in the implementation of binary heaps&lt;/li&gt;
+&lt;li&gt;Treap - a probabilistic data structure (uses randomized BST).&lt;/li&gt;
+&lt;li&gt;Base of other trees.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complexity-of-bst&#34;&gt;Complexity of BST&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Method&lt;/th&gt;
+&lt;th&gt;Average&lt;/th&gt;
+&lt;th&gt;Worst&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;insert&lt;/td&gt;
+&lt;td&gt;O(log(n))&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;delete&lt;/td&gt;
+&lt;td&gt;O(log(n))&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;remove&lt;/td&gt;
+&lt;td&gt;O(log(n))&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;search&lt;/td&gt;
+&lt;td&gt;O(log(n))&lt;/td&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Cool, eh? And very useful!&lt;/p&gt;
+&lt;p&gt;If the tree is well structured, it is very good data strcuture and easy to implement. Most of the cases, worst case is not an option.&lt;/p&gt;
+&lt;p&gt;Worst case comes into play when the data creates a flat line &amp;lsquo;tree&amp;rsquo; and somehow you need to go through all the way to the last element.&lt;/p&gt;
+&lt;p&gt;You can think average case as a case where everytime you cut your search into half.&lt;/p&gt;
+&lt;h4 id=&#34;implementation&#34;&gt;Implementation&lt;/h4&gt;
+&lt;p&gt;How to implement a tree as BST?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;make sure that the elements are comparable so that we can order them inside the tree.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When insterting an element we want to compare its value to the value stored in the current node we&amp;rsquo;re considering to decide on one of the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;recurse down left subtree ( &amp;lt; case )&lt;/li&gt;
+&lt;li&gt;recurese down right subtree ( &amp;gt; case )&lt;/li&gt;
+&lt;li&gt;handle finding a duplicate value ( = case )&lt;/li&gt;
+&lt;li&gt;create a new node ( &lt;em&gt;null&lt;/em&gt; case )&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;1. insert 7
+		
+		7
+
+2. insert 20.
+		
+		7 
+	   	  \ 
+	   	   20
+
+3. insert 5. 
+		
+		7 
+	   / \ 
+	  5   20
+
+4. insert 15.
+
+		7 
+	   / \ 
+	  5   20
+	     / 
+	    15
+
+5. insert 10
+		
+		7 
+	   / \ 
+	  5   20
+	     / 
+	    15
+	   /
+	  10
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Linear cases are covered with balanced binary search trees.&lt;/p&gt;
+&lt;p&gt;Removing elements from a BST can be seen as a two step process.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;find the element we wish to remove (if exists)&lt;/li&gt;
+&lt;li&gt;replace the node we want to remove with its successor to maintain the BST invariant.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Remember:
+BST invariant is where left subtree has smaller element and right subtree has larger elements.&lt;/p&gt;
+&lt;h4 id=&#34;finding-phase&#34;&gt;Finding phase&lt;/h4&gt;
+&lt;p&gt;When searching BST for a node with a particular value one of four things will happen:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;we hit null node at which point we know the value does not exist&lt;/li&gt;
+&lt;li&gt;comparator value equal to 0, (found it)&lt;/li&gt;
+&lt;li&gt;comparator value less than 0 (in left subtree)&lt;/li&gt;
+&lt;li&gt;comparator value greater than 0 (in right subtree)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;remove-phase&#34;&gt;Remove phase&lt;/h4&gt;
+&lt;p&gt;Removing has basically 4 cases:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Node to remove is a leaf node&lt;/li&gt;
+&lt;li&gt;Node to remove has a right subtree but no left subtree&lt;/li&gt;
+&lt;li&gt;Node to remove has a left subtree but no right subtree&lt;/li&gt;
+&lt;li&gt;Node to remove has both a left and right subtree&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;handle-each-case-separately&#34;&gt;Handle each case separately.&lt;/h5&gt;
+&lt;p&gt;&lt;em&gt;Case I: Leaf node&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;If the node we wish to remove is a leaf node then we may do so without side effect.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;		8
+	   / \
+	  5   12
+	 / \ 
+	3   6
+
+If we just remove 3, then we find it inside the tree and remove it. 
+It will cause no side effects.
+
+Result:
+
+		8
+	   / \
+	  5   12
+	   \ 
+        6
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;em&gt;Case II and III: left or right node has a subtree&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This may be the case that we are trying to remove the root node of the (sub)tree in which case its immediate child becomes the new root.
+This is the case where node has either left or right subtree.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Suppose we want to remove 9
+		5
+	   / \
+	  4   9
+	     /  
+ 		7 
+ 	   / \
+ 	  6   8
+
+First, we find the node 9.
+Then remove it.
+After that 7 will take its place.
+
+Result:
+		5
+	   / \
+	  4   7
+	     / \
+ 		6   8
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;em&gt;Case IV: node to remove has both a left and right subtree&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In this case we have a problem - which node will take removable nodes place?&lt;/p&gt;
+&lt;p&gt;There are two options:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;largest value in the left subtree OR&lt;/li&gt;
+&lt;li&gt;smallest value in the right subtree&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This way the BST will satisfy the BST invariants.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Remove 9
+
+		5
+	   / \
+	  4   9
+	     / \ 
+ 		7   11
+ 	   / \    \
+ 	  6   8    13
+
+1. find 9 (if we have it)
+2. now pick which option to go: 
+	- largest from left subtree or
+	- smallest form right subtree.
+In this case we will go with the largest value.
+3. find the largest value from the left subtree.
+In our case it will be 8. Go as fas as possible.
+4. copy that value from the node found in the subtree to the node we want to remove. 
+
+		5
+	   / \
+	  4   8
+	     / \ 
+ 		7   11
+ 	   / \    \
+ 	  6   8    13
+
+5. Now is the case where we have double 8 in our tree.
+But in this case we will have I or II or III case removal.
+
+Result:
+
+		5
+	   / \
+	  4   8
+	     / \ 
+ 		7   11
+ 	   /      \
+ 	  6        13
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;tree-traversals&#34;&gt;Tree traversals&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Preorder - prints before the recursive calls. This is basically from largest to smallest.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Inorder - prints between recursive calls. This is basically from smallest to largest.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Postorder - prints after recursive calls. This works through the subtree and then moves on.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Level order - in a level order traversal we want to print the nodes as they appear one layer at a time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;		5
+	   / \
+	  4   8
+	     / \ 
+ 		7   11
+ 	   /      \
+ 	  6        13
+
+In level order case we print:
+5 - 4 - 8 - 7 - 11 - 6 - 13
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;First tree traversals are naturally defined recursively.&lt;/p&gt;
+&lt;h4 id=&#34;source-code&#34;&gt;Source code&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;BinarySearchTree&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h4&gt;
+</description>
+    </item>
     
     <item>
       <title>Queue</title>
@@ -1132,9 +1408,9 @@ The most &amp;lsquo;complicated&amp;rsquo; methods are &lt;em&gt;removeAt()&lt;/
 	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Why this is O(n^2)?&lt;/p&gt;
-&lt;p&gt;It goes something like this:&lt;/p&gt;
+&lt;p&gt;It goes like this:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;for the beginning, let&amp;rsquo;s focus on the second loop.&lt;/li&gt;
+&lt;li&gt;we need to figure our from inside out, because inner loops happen first. So let&amp;rsquo;s focus on the second loop.&lt;/li&gt;
 &lt;li&gt;since &lt;em&gt;i&lt;/em&gt; goes from [0, n) the amount of looping done is directly determine by what &lt;em&gt;i&lt;/em&gt; is.&lt;/li&gt;
 &lt;li&gt;remark that if &lt;em&gt;i = 0&lt;/em&gt;, we do &lt;em&gt;n&lt;/em&gt; work, if &lt;em&gt;i=1&lt;/em&gt;, we do &lt;em&gt;n-1&lt;/em&gt; work, if &lt;em&gt;i = 2&lt;/em&gt;, we do &lt;em&gt;n - 2&lt;/em&gt; work, etc.&lt;/li&gt;
 &lt;/ul&gt;
@@ -1157,15 +1433,15 @@ while i &amp;lt; 3 * n Do
 f(n) = 3n * (40 + n^3/2) = 3n / 40 + 3n^4/2 
 
 To break it down:
-* 3n ==&amp;gt; outer while loop, which goes through 3*n
-* (40 + n^3/2) ==&amp;gt; 40 comes from the first inner loop since 
-j = 10 and we go constant amount times (in this case 50), 
-and n^3 / 2 comes n*n*n and j is incremented 2 times each time. 
+1. 3n ==&amp;gt; outer while loop, which goes through 3*n
+2. 40 + (n^3/2) ==&amp;gt; 40 comes from the first inner loop since 
+   j = 10 and we go constant amount times (in this case 50), 
+   and n^3 / 2 comes n*n*n and j is incremented 2 times each time. 
 
 since inner while loops are &#39;inner&#39;, we need to multiply them.
 
 And to put it all together we get 
-3n / 40  + 3n^4 / 2
+3n / (40  + (3n^4 / 2)) =&amp;gt; 3/2n * (n^3 + 80) =&amp;gt; remove constants =&amp;gt; n * n^3 =&amp;gt; n^4
 
 which in big O notation becomes
 O(f(n)) = O(n^4)
@@ -1771,248 +2047,6 @@ problem. An object will never be left in broken state, cuz its state is modified
 &lt;/ol&gt;
 &lt;/section&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Inheritance</title>
-      <link>https://tjoosep.github.io/oop/inheritance/</link>
-      <pubDate>Fri, 26 Mar 2021 14:15:50 +0200</pubDate>
-      
-      <guid>https://tjoosep.github.io/oop/inheritance/</guid>
-      <description>&lt;p&gt;The idea behind inheritance is that you can create new classes that are built on top
-of existing classes. It means that you use already existing classes while adding
-new object specific information.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Idea is to divide into objects.&lt;/li&gt;
-&lt;li&gt;Has Access Modifiers - public, private, protected&lt;/li&gt;
-&lt;li&gt;Objects can move and communicate with each other through member functions&lt;/li&gt;
-&lt;li&gt;Supports overloading&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Represents the IS-A relationshop which is also knows as a parent-child relationship.
-Also known as generalization.&lt;/p&gt;
-&lt;h4 id=&#34;without-inheritance&#34;&gt;Without inheritance&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Tv&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Long id&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; String name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Double price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer screenSize&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Integer refreshRage&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Mobile&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Long id&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; String name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Double price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; String operatingSystem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; String company&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now we are in trouble if we want to add more attributes that are common.
-Everything will get messy if we have more than, lets say, 5 object with some similar, some different attributes.
-E.g tv has manufacturer, left in stock. Mobile has type, extra gear&amp;hellip;&lt;/p&gt;
-&lt;p&gt;But as we can see they all have common things, like price, name, etc.&lt;/p&gt;
-&lt;p&gt;How to fix it? Inheritance&lt;/p&gt;
-&lt;h4 id=&#34;with-the-inheritance&#34;&gt;With the inheritance&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Product&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Long id&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; String name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Double price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// constructor
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Product&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Double price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;price&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// getters and setters + toString
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;TV&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Product
-	
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; Integer refreshRate&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; Integer screenSize&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;LedTV&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Double price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Integer refreshRate&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Integer screenSize&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;refreshRate&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; refreshRate&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;screenSize&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; screenSize&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// getters and setters + toString for printing out 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Mobile&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Product &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; String operatingSystem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; String company&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Mobile&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Double price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; String operatingSystem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; String company&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; price&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;operatingSystem&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; operatingSystem&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;company&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; company&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// getters and setters + toString for printing out 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Inheritance&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		Product product &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Product&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;product A&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 10&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;99&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-        System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;product&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-
-        Product mobile &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Mobile&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;iPhone&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 899&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;99&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;iOS&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Apple&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-        System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;mobile&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-
-        Product tv &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; LedTV&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Ultra HD TV&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 1099&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;99&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 50&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 58&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-        System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;tv&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Output:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Product{name=&#39;product A&#39;, price=10.99}
-Mobile{name=&#39;iPhone&#39;, price=899.99, operatingSystem=&#39;iOS&#39;, company=&#39;Apple&#39;}
-LedTV{name=&#39;Ultra HD TV&#39;, price=1099.99, refreshRate=50, screenSize=58}
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;overloading-and-overriding&#34;&gt;Overloading and Overriding&lt;/h4&gt;
-&lt;p&gt;When talking about inheritance then there will come up two words that might confuse in the beginning - overloading and overriding.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Overloading&lt;/code&gt; - same method name but with different parameters and return type. E.g &lt;code&gt;System.out.println()&lt;/code&gt; has most of the time different parameters.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Overriding&lt;/code&gt; - Subclass has the same method as in parent class, but acts differently.
-Usually nice to say with &lt;code&gt;@Override&lt;/code&gt; annotation.&lt;/p&gt;
-&lt;p&gt;For example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Product&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// same parameters as before
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Integer &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;calculatePrice&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// calculates the price of current product
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Mobile&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Product &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// same parameters as before
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;
-	&lt;span style=&#34;color:#3c5d5d;font-weight:bold&#34;&gt;@Override&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Integer &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;calculatePrice&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// calculates the price of current mobile
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// Overloading
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;calcualte&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// magic #1
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Double &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;calcualte&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; x&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; y&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// magic #2
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Integer &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;calcualte&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; b&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// magic #3
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;difference-between-overloading-and-overriding&#34;&gt;Difference between Overloading and Overriding&lt;/h4&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Overloading&lt;/th&gt;
-&lt;th&gt;Overriding&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Happens inside one class&lt;/td&gt;
-&lt;td&gt;Occurs in super class and sub class. I.e inheritance is involved&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Name of the method is the same but parameters are different&lt;/td&gt;
-&lt;td&gt;Name and parameters both are the same&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Increases readability&lt;/td&gt;
-&lt;td&gt;Using the same method in child class which is already presented in parent class.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Return type can be same or different&lt;/td&gt;
-&lt;td&gt;Return type is always the same&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Compile time polymorphism&lt;/td&gt;
-&lt;td&gt;Run time polymorphism&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&#34;why-use-method-overloading&#34;&gt;Why use method overloading?&lt;/h4&gt;
-&lt;p&gt;Overloading makes code cleaner and easier to read.
-Overloading the method - for example &lt;code&gt;calculate()&lt;/code&gt; method above - lets you use the the same method with the same name
-while only changing the parameters. Imagine having &lt;code&gt;calculate()&lt;/code&gt; method but with different name for each data type&amp;hellip;&lt;/p&gt;
-&lt;p&gt;Keep in mind that it is impossible to have method with same name and with same paramters. Compiler will tell you that.
-Simply changing the return type of two methods with same names will not result in overloading. Again, compiler will tell you that.&lt;/p&gt;
-&lt;h4 id=&#34;why-use-method-overriding&#34;&gt;Why use method overriding?&lt;/h4&gt;
-&lt;p&gt;It has two main concepts:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;it is used to provide specific implementation of a method which is already defined in parent class.&lt;/li&gt;
-&lt;li&gt;it is used for runtime polymorphism. (more about it later)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Rules to override:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;name and return type must be the same.&lt;/li&gt;
-&lt;li&gt;also the signature of the method should be the same&lt;/li&gt;
-&lt;li&gt;method can only be overridden in sub class, not in the same class (like overloading).&lt;/li&gt;
-&lt;li&gt;overriding method cannot throw checked Exception than checked exception thrown by overridden method.
-E.g If method in parent class throws &lt;code&gt;IOException&lt;/code&gt; or &lt;code&gt;ClassNotFoundException&lt;/code&gt; then the same method in subclass cannot throw casual &lt;code&gt;Exception&lt;/code&gt; because last one is higher in hierarchy.&lt;/li&gt;
-&lt;li&gt;Overriding method cannot reduce access. It means that if overridden method is defined public, then overriding method cannot be protected or private. BUT it can be other way around - overridden method can be protected and overriding method can be public.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;private&lt;/code&gt;, &lt;code&gt;static&lt;/code&gt; and &lt;code&gt;final&lt;/code&gt; methods cannot be overriden in Java.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;You can prevent overriding by using &lt;code&gt;final&lt;/code&gt; keyword.&lt;/p&gt;
-&lt;h3 id=&#34;advantages-of-using-inheritance&#34;&gt;Advantages of using inheritance:&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;code reusability&lt;/li&gt;
-&lt;li&gt;extensibility&lt;/li&gt;
-&lt;li&gt;overriding&lt;/li&gt;
-&lt;li&gt;data hiding&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Types of inheritance in Java&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;single level&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;one parent one child relatsionship&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;multilevel&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;parent to child to child (e.g):&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;class A &amp;lt;- class B extends A &amp;lt;- class C extends B&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;hierarchical&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;one parent with more than one children&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;why-multiple-inheritance-is-not-suppoert-in-java&#34;&gt;Why multiple inheritance is not suppoert in java?&lt;/h3&gt;
-&lt;p&gt;Consider a case where A, B and C are three classes.
-The class C inherits A and B classes.
-If A and B classes have the same method and you call it from child class, there will be uncertainty which method to call - from A or from B class?&lt;/p&gt;
-&lt;p&gt;Since compile-time errors are better than runtime errors, Java renders compile-time error if you inherit 2 classes.
-So wheter you have same method or different, there will be compile time error.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;A&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;printMessage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(){&lt;/span&gt;
-		System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;B&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-
-	pulbic &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;printMessage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		System&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;C&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extends&lt;/span&gt; A&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; B &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;   &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// suppose it is possible
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-		C obj &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; C&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-		obj&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;printMessage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;// which message will be invoked?
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>
